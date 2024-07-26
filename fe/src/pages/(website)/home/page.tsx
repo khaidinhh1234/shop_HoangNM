@@ -1,14 +1,15 @@
-import React from 'react'
-import Banner from './_components/Banner'
+import React from "react";
+import Banner from "./_components/Banner";
 
-type Props = {}
+type Props = {};
 
 const HomePage = (props: Props) => {
   return (
-    <div>HomePage
+    <div className="">
+      HomePage
       <Banner />
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

@@ -7,20 +7,20 @@ import LayoutWebsite from "@/pages/(website)/layout";
 import { Route, Routes } from "react-router-dom";
 
 const Router = () => {
-    return (
-        <>
-            <Routes>
-                <Route path="/" element={<LayoutWebsite />}>
-                    <Route index element={<HomePage />} />
-                </Route>
-                <Route path="admin" element={<LayoutAdmin />}>
-                    <Route index element={<DashboardPage />} />
-                    <Route path="products" element={<ProductsManagementPage />} />
-                </Route>
-                <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-        </>
-    );
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<LayoutWebsite />}>
+          <Route index element={<HomePage />} />
+        </Route>
+        <Route path="admin" element={<LayoutAdmin />}>
+          <Route index element={<DashboardPage />} />
+          <Route path="products" element={<ProductsManagementPage />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
+  );
 };
 
 export default Router;

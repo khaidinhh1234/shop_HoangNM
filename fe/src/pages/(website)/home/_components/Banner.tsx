@@ -1,11 +1,9 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 const Banner = (props: Props) => {
-  return (
-    <div>Banner</div>
-  )
-}
+  return <div className="">Banner</div>;
+};
 
-export default Banner
+export default Banner;
