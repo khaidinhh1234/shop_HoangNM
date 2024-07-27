@@ -1,16 +1,21 @@
 import express from "express";
-import productRouter from "./routers/product";
-import { connectDB } from "./config/db";
 import cors from "cors";
 import morgan from "morgan";
+import { connectDB } from "./config/db";
+
+import dotenv from "dotenv";
+
+import { Router } from "./routers";
+
 const app = express();
-// middleware
+dotenv.config();
+
 app.use(express.json());
 app.use(cors());
 app.use(morgan("tiny"));
 
-// connect database
-connectDB("mongodb://localhost:27017/wd18333");
+connectDB(process.env.DB_URI);
 
-app.use("/api", productRouter);
+Router(app);
+
 export const viteNodeApp = app;
