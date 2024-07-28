@@ -1,5 +1,5 @@
-import instance from '@/configs/axios'
-import { AxiosResponse } from 'axios'
+import instance from "@/configs/axios";
+import { AxiosResponse } from "axios";
 // import { IProduct } from '@/common/types/product'
 // const userDataString = localStorage.getItem('user');
 // let token = '';
@@ -12,20 +12,22 @@ import { AxiosResponse } from 'axios'
 //     }
 // }
 // // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getAllProducts = async (params?: any): Promise<AxiosResponse<any>> => {
-    try {
-        const response = await instance.get('/products', { params })
-        return response;
-    } catch (error) {
-        return {
-            data: [],
-            status: 500,
-            statusText: 'Internal Server Error',
-            headers: {},
-            config: {} as any
-        }
-    }
-}
+export const getAllProducts = async (
+  params?: any
+): Promise<AxiosResponse<any>> => {
+  try {
+    const response = await instance.get("v1/products", { params });
+    return response;
+  } catch (error) {
+    return {
+      data: [],
+      status: 500,
+      statusText: "Internal Server Error",
+      headers: {},
+      config: {} as any,
+    };
+  }
+};
 // export const getProductById = async (id: number | string) => {
 //     try {
 //         const response = await instance.get(`/products/${id}`)
@@ -73,4 +75,3 @@ export const getAllProducts = async (params?: any): Promise<AxiosResponse<any>> 
 //         console.log(error)
 //     }
 // }
-

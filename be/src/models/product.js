@@ -12,11 +12,11 @@ const ProductSchema = new mongoose.Schema(
     },
     discount: {
       type: Number,
-      required: true,
+      // required: true,
     },
     countIn_stock: {
       type: Number,
-      required: true,
+      // required: true,
     },
     feature_image: {
       type: String,

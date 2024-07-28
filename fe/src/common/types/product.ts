@@ -3,9 +3,9 @@ export interface IProduct {
   // id?: number,
   name: string;
   category?: string;
-  price: number;
+  regular_price: number;
   quantity?: number;
-
+  feature_image?: string;
   description?: string;
   discount?: number;
   featured?: boolean;

@@ -1,9 +1,10 @@
 import { IProduct } from "@/common/types/product";
 import { Button } from "@/components/ui/button";
+import instance from "@/configs/axios";
 import { getAllProducts } from "@/services/product";
-import axios from "axios";
 import { Plus } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -28,7 +29,7 @@ const ProductsPage = () => {
   const remove = async (id: string) => {
     console.log(id);
     try {
-      const response = await axios.delete(`/products/` + id);
+      const response = await instance.delete(`/v1/products/` + id);
       console.log(response);
       const data = response.data;
       if (data.success) {
@@ -44,16 +45,17 @@ const ProductsPage = () => {
     <div>
       <div className="flex items-center justify-between">
         <h1>Quản lý sản phẩm</h1>
-        <Button variant="violet">
-          <Plus /> Thêm
-        </Button>
+
+        <Link to={"/admin/product/add"}>Add</Link>
       </div>
-      <table>
+      <table className="table ">
         <thead>
           <tr>
             <th>#</th>
+            <th>anh</th>
             <th>Tên</th>
             <th>Giá</th>
+            <th>description</th>
             <th></th>
           </tr>
         </thead>
@@ -62,10 +64,21 @@ const ProductsPage = () => {
             products.map((item: IProduct, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{item.name}</td>
-                <td>{item.price}</td>
                 <td>
-                  <button onClick={() => remove(item._id)}>Remove</button>
+                  <img
+                    src={item.feature_image}
+                    alt={item.name}
+                    className=" w-20 h-20"
+                  />
+                </td>
+                <td>{item.name}</td>
+                <td>{item.regular_price}</td>
+                <td>{item.description}</td>
+                <td>
+                  <Link to={"/admin/products/edit/" + item._id}>Edit</Link>
+                  <button onClick={() => remove(String(item._id))}>
+                    Remove
+                  </button>
                 </td>
               </tr>
             ))}
