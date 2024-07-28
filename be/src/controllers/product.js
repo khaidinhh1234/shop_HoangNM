@@ -1,5 +1,4 @@
 import Products from "../models/product";
-import { set } from "react-hook-form";
 export const createProduct = async (req, res) => {
   try {
     const Product = await Products.create(req.body);
