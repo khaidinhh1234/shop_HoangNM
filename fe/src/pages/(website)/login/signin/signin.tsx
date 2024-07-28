@@ -1,4 +1,28 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useAuth } from "@/contexts/AuthContext";
+import { User } from "@/interfaces/User";
+import { loginSchema } from "@/untils/validations";
+import { Link } from "react-router-dom";
+import instance from "@/configs/axios";
 const Signin = () => {
+  const { login: contextLogin } = useAuth();
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+  } = useForm<User>({
+    resolver: zodResolver(loginSchema),
+  });
+  const onSubmit = async (data: User) => {
+    try {
+      const res = await instance.post(`/v1/auth/signin`, data);
+      contextLogin(res.data.accessToken, res.data.user);
+    } catch (error: any) {
+      console.log(error);
+      alert(error.response?.data?.message || "Error!");
+    }
+  };
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -14,7 +38,12 @@ const Signin = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form
+            action="#"
+            method="POST"
+            className="space-y-6"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div>
               <label
                 htmlFor="email"
@@ -25,13 +54,16 @@ const Signin = () => {
               <div className="mt-2">
                 <input
                   id="email"
-                  name="email"
                   type="email"
-                  placeholder=" Email@gmail.com  "
+                  placeholder="email@gmail.com"
                   required
                   autoComplete="email"
                   className="block w-full rounded-md border py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  {...register("email", { required: true })}
                 />
+                {errors.email && (
+                  <span className="text-danger">{errors.email.message}</span>
+                )}
               </div>
             </div>
 
@@ -43,25 +75,20 @@ const Signin = () => {
                 >
                   Mật khẩu
                 </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Quên mật khẩu?
-                  </a>
-                </div>
               </div>
               <div className="mt-2">
                 <input
                   id="password"
-                  name="password"
                   type="password"
-                  required
                   placeholder="**********"
+                  required
                   autoComplete="current-password"
                   className="block w-full rounded-md border py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  {...register("password", { required: true })}
                 />
+                {errors.password && (
+                  <span className="text-danger">{errors.password.message}</span>
+                )}
               </div>
             </div>
 
@@ -77,12 +104,12 @@ const Signin = () => {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             Chưa là thành viên?{" "}
-            <a
-              href="signup"
+            <Link
+              to="/signup"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
               Tôi chưa có tài khoản
-            </a>
+            </Link>
           </p>
         </div>
       </div>

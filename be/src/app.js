@@ -10,6 +10,8 @@ import { Router } from "./routers";
 const app = express();
 dotenv.config();
 
+app.use(cors());
+
 app.use(express.json());
 app.use(cors());
 app.use(morgan("tiny"));
