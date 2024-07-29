@@ -111,6 +111,15 @@ const Signin = () => {
               Tôi chưa có tài khoản
             </Link>
           </p>
+          <p className="mt-10 text-center text-sm text-gray-500">
+            Tôi đã quên mật khẩu?{" "}
+            <Link
+              to="/forgotPassword"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
+              Quên mật khẩu
+            </Link>
+          </p>
         </div>
       </div>
     </>

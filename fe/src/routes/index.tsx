@@ -5,6 +5,7 @@ import NotFoundPage from "@/pages/(website)/404/page";
 import CheckOut from "@/pages/(website)/checkOut/CheckOut";
 import HomePage from "@/pages/(website)/home/page";
 import LayoutWebsite from "@/pages/(website)/layout";
+import ForgotPassword from "@/pages/(website)/login/forgotPassword/forgotPassword";
 import Signin from "@/pages/(website)/login/signin/signin";
 import Signup from "@/pages/(website)/login/signup/signup";
 import { Route, Routes } from "react-router-dom";
@@ -23,6 +24,7 @@ const Router = () => {
         </Route>
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
