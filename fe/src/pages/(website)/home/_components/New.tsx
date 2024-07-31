@@ -1,6 +1,17 @@
-import React from "react";
+import { IProduct } from "@/common/types/product";
+import instance from "@/configs/axios";
+import React, { useEffect, useState } from "react";
 
 const New = () => {
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const fetchProduct = async () => {
+    const { data } = await instance.get(`/v1/products`);
+    setProducts(data);
+    console.log(data, "data");
+  };
+  useEffect(() => {
+    fetchProduct();
+  }, []);
   return (
     <div>
       {" "}
@@ -11,47 +22,61 @@ const New = () => {
           </div>
           <div className="section-body">
             <div className="product-list">
-              <div className="product-item">
-                <div className="product-image">
-                  <img
-                    src="https://picsum.photos/id/101/300/300"
-                    alt=""
-                    className="product__thumbnail"
-                  />
-                  <span className="product-sale">-30%</span>
-                </div>
-                <div className="product-info">
-                  <h3 className="product__name">
-                    <a href="" className="product__link">
-                      Syltherine
-                    </a>
-                  </h3>
-                  <a href="" className="product__category">
-                    Stylish cafe chair
-                  </a>
-                  <div className="product-price">
-                    <span className="product-price__new">2.500.000đ</span>
-                    <del className="product-price__old">3.500.000đ</del>
-                  </div>
-                </div>
-                <div className="product-actions">
-                  <button className="btn product-action__quickview border-black  border hover:bg-black  text-white/70 bg-black/50">
-                    <a href="detail.html" className="product-action__link  ">
-                      Quick View
-                    </a>
-                  </button>
-                  <button className="btn product-action__addtocart border-black  border hover:bg-black  text-white/70  bg-black/50">
-                    <a href="cart.html" className="product-action__link">
-                      Add to Cart
-                    </a>
-                  </button>
-                  <div className="product-actions-more *:mx-3">
-                    <span className="product-action__share">Share</span>
-                    <span className="product-action__compare">Compare</span>
-                    <span className="product-action__like">Like</span>
-                  </div>
-                </div>
-              </div>
+              {products.map(
+                (product) => (
+                  console.log(product),
+                  (
+                    <div className="product-item" key={product._id}>
+                      <div className="product-image">
+                        <img
+                          src={product.feature_image}
+                          alt=""
+                          className="product__thumbnail"
+                        />
+                        <span className="product-sale">-30%</span>
+                      </div>
+                      <div className="product-info">
+                        <h3 className="product__name">
+                          <a href="" className="product__link">
+                            {product.name}
+                          </a>
+                        </h3>
+                        <a href="" className="product__category">
+                          {product.description}
+                        </a>
+                      </div>
+                      <div className="product-price">
+                        <span className="product-price__new">
+                          {product.regular_price}đ
+                        </span>
+                        <del className="product-price__old">3.500.000đ</del>
+                      </div>
+                      <div className="product-actions">
+                        <button className="btn product-action__quickview border-black  border hover:bg-black  text-white/70 bg-black/50">
+                          <a
+                            href="detail.html"
+                            className="product-action__link  "
+                          >
+                            Quick View
+                          </a>
+                        </button>
+                        <button className="btn product-action__addtocart border-black  border hover:bg-black  text-white/70  bg-black/50">
+                          <a href="cart.html" className="product-action__link">
+                            Add to Cart
+                          </a>
+                        </button>
+                        <div className="product-actions-more *:mx-3">
+                          <span className="product-action__share">Share</span>
+                          <span className="product-action__compare">
+                            Compare
+                          </span>
+                          <span className="product-action__like">Like</span>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                )
+              )}
               {/*End .product-item*/}
               <div className="product-item">
                 <div className="product-image">
