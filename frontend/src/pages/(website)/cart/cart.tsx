@@ -12,25 +12,67 @@ const Cart = () => {
                 <span className="cart-table-title__name">Subtotal</span>
               </div>
 
-              <div className="cart-table-body">
-                <div className="cart-table_img">
+              <div className="cart-table-body w-[900px]">
+                <div className=" w-24 h-24 ">
                   <img
-                    src="https://picsum.photos/id/204/1440/500"
+                    src="https://picsum.photos/id/237/300/300"
                     alt=""
-                    className="cart-table_image"
+                    className="h-full w-full rounded-lg"
                   />
                 </div>{" "}
-                <span className="cart-table_itemA">Asgaard sofa</span>
-                <span className="cart-table_itemB">25.000.000đ</span>
-                <button className=" bg-slate-500 w-5 me-2">-</button>{" "}
-                <span className="cart-table_itemC">1</span>
-                <button className="bg-orange-600 w-5 ms-2">+</button>
-                <span className="cart-table_itemD">25.000.000đ</span>
-                <span className="cart-table_itemE">
-                  <a href="#">
-                    <img src="./public/images/cart/delete.svg" alt="" />
+                <span className="">Asgaard sofa</span>
+                <span className="">25.000.000đ</span>{" "}
+                <div className="lg:mt-0 mb:mt-[12.5px] flex items-center *:grid *:place-items-center *:lg:w-9 *:lg:h-9 *:mb:w-8 *:mb:h-8 ml-5">
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width={12}
+                      height={12}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-minus text-xs"
+                    >
+                      <path d="M5 12h14" />
+                    </svg>
+                  </button>
+                  <div className="bg-[#F4F4F4] text-xs rounded">1</div>
+                  <button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width={12}
+                      height={12}
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-plus text-xs"
+                    >
+                      <path d="M5 12h14" />
+                      <path d="M12 5v14" />
+                    </svg>
+                  </button>{" "}
+                </div>
+                <div className="flex">
+                  <span className="">25.000.000đ</span>
+                  <a href="#" className="ml-20">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 448 512"
+                      className="w-7 h-7"
+                    >
+                      <path
+                        fill="#812709"
+                        d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"
+                      />
+                    </svg>
                   </a>
-                </span>
+                </div>
               </div>
             </div>
             <div className="cart-totals">

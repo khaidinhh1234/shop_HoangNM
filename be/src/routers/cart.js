@@ -4,7 +4,6 @@ import {
   descreaseQuantity,
   getByIdCart,
   inscreaseQuantity,
-  removeCartMany,
   removeProductId,
 } from "../controllers/cart";
 const CartRoute = Router();
