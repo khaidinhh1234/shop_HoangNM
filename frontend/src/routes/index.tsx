@@ -16,6 +16,9 @@ import { Route, Routes } from "react-router-dom";
 
 import ThankyouPage from "@/pages/(dashboard)/user/home/_component/thankyou";
 import OrderPage from "@/pages/(website)/order/order";
+import ForgotPassword from "@/pages/(auth)/forgotPassword";
+import Users from "@/pages/(dashboard)/admin/users/Users";
+import UserForm from "@/pages/(dashboard)/admin/users/UserForm";
 
 const Router = () => {
   return (
@@ -33,6 +36,7 @@ const Router = () => {
               <Route path="cart" element={<CartPage />}></Route>{" "}
               <Route path="signin" element={<Signin />}></Route>
               <Route path="signup" element={<Signup />}></Route>
+              <Route path="/forgotPassword" element={<ForgotPassword />} />
               <Route path="order" element={<OrderPage />}></Route>
               <Route path="thankyou" element={<ThankyouPage />}></Route>{" "}
             </Route>
@@ -45,6 +49,8 @@ const Router = () => {
               // </PrivateRoute>
             }
           >
+            <Route path="/admin/users" element={<Users />} />
+            <Route path="/admin/users/usersEdit/:id" element={<UserForm />} />
             {/* <Route path="products" element={<LayoutProduct />}>
               {/* <Route index element={<PageAdmin />}></Route>
               <Route path="add" element={<ProductsAdd />}></Route>
