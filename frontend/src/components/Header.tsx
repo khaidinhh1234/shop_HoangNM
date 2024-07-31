@@ -5,9 +5,12 @@ import {
   Iconcart,
   Logo,
 } from "@/components/Icons";
+import { AuthContext, AuthContextType } from "@/contexts/AuthContext";
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 const Header = () => {
+  const { user, logout } = useContext(AuthContext) as AuthContextType;
   return (
     <>
       {" "}
@@ -48,9 +51,21 @@ const Header = () => {
             </nav>
             <div className="header-items">
               <div className="header-item-user">
-                <Link to="/signup">
-                  <img src={IconUser} />
-                </Link>
+                {user ? (
+                  <>
+                    <span className="fix-name">Welcome, {user?.name}</span>
+                    <br />
+                    <button className="fw-bolder " onClick={logout}>
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link to="signup">
+                      <img src="../src/assets/images/img1.svg" />
+                    </Link>
+                  </>
+                )}
               </div>
               <div className="header-item-user">
                 <span>
