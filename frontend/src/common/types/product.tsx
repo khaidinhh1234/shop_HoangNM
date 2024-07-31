@@ -1,9 +1,9 @@
 export interface IProduct {
   _id?: number | string;
   name: string;
-  image: string;
+  feature_image: string;
   category?: string;
-  price: number;
+  regular_price: number;
   description: string;
   discount: number;
   gallery?: string[];
