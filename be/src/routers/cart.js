@@ -4,6 +4,8 @@ import {
   descreaseQuantity,
   getByIdCart,
   inscreaseQuantity,
+  removeCartMany,
+  removeProductId,
 } from "../controllers/cart";
 const CartRoute = Router();
 
@@ -11,7 +13,7 @@ CartRoute.get("/:userId", getByIdCart);
 
 CartRoute.post("/add-to-cart", createCart);
 
-CartRoute.post("/add-to-cart");
+CartRoute.delete("/delete-product", removeProductId);
 
 CartRoute.post("/inscrease", inscreaseQuantity);
 
