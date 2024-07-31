@@ -1,8 +1,10 @@
-import React from "react";
+import { AuthContext, AuthContextType } from "@/contexts/AuthContext";
+import React, { useContext } from "react";
 
 type Props = {};
 
 const Header = (props: Props) => {
+  const { user, logout } = useContext(AuthContext) as AuthContextType;
   return (
     <div>
       {" "}
@@ -43,9 +45,21 @@ const Header = (props: Props) => {
             </nav>
             <div className="header-items">
               <div className="header-item-user">
-                <a href="signup">
-                  <img src="../src/assets/images/img1.svg" />
-                </a>
+                {user ? (
+                  <>
+                    <span className="fix-name">Welcome, {user?.name}</span>
+
+                    <button className="fw-bolder " onClick={logout}>
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <a href="signup">
+                      <img src="../src/assets/images/img1.svg" />
+                    </a>
+                  </>
+                )}
               </div>
               <div className="header-item-user">
                 <span>

@@ -65,7 +65,7 @@ const ProductsPage = () => {
                 <td>{item.name}</td>
                 <td>{item.price}</td>
                 <td>
-                  <button onClick={() => remove(item._id)}>Remove</button>
+                  <button onClick={() => remove(item._id!)}>Remove</button>
                 </td>
               </tr>
             ))}
