@@ -67,11 +67,7 @@ const Cart = () => {
                       </button>
                       <div
                         className={`bg-[#F4F4F4] text-xs rounded mx-2 ${
-                          item.quantity <= 10
-                            ? "text-black"
-                            : `text-red-500 ${toast.error(
-                                "Số lượng sản phẩm giới hạn là 10"
-                              )}`
+                          item.quantity <= 10 ? "text-black" : `text-red-500 `
                         }`}
                       >
                         {item.quantity}
@@ -141,9 +137,11 @@ const Cart = () => {
                   <span className="cart-totals_name">Total</span>
                 </div>
                 <div className="cart-totals_item">
-                  <span className="cart-totals_priceA">{cart.totalPrice}đ</span>
+                  <span className="cart-totals_priceA">
+                    {cart?.totalPrice}đ
+                  </span>
                   <span className="cart-totals_priceB">
-                    {cart.finalTotalPrice}đ
+                    {cart?.finalTotalPrice}đ
                   </span>
                 </div>
               </div>
@@ -151,8 +149,8 @@ const Cart = () => {
                 <button className="cart-totals_btn">
                   <a
                     href="/order"
-                    className={`cart-totals_link ${
-                      cart.products.length === 0 && "pointer-events-none"
+                    className={`cart-totals_link border hover:border-[#b88e2f] hover:bg-[#b88e2f]/90 border-black hover:text-white px-10 py-3 rounded-2xl ${
+                      cart.products.length === 0 ? "cursor-not-allowed" : ""
                     }`}
                   >
                     Check Out

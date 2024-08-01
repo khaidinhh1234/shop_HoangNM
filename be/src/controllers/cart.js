@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import Cart from "../models/Cart";
+import { reducer } from "./../../../shop_HoangNM/frontend/src/components/ui/use-toast";
 
 export const getByIdCart = async (req, res) => {
   try {
@@ -19,6 +20,16 @@ export const getByIdCart = async (req, res) => {
           quantity: product.quantity,
         };
       }),
+      totalPrice: cart.products.reduce(
+        (total, product) =>
+          total + product.productId.regular_price * product.quantity,
+        0
+      ),
+      finalTotalPrice: cart.products.reduce(
+        (total, product) =>
+          total + product.productId.regular_price * product.quantity,
+        0
+      ),
     };
     res.status(200).json(carts);
   } catch (error) {
@@ -26,6 +37,25 @@ export const getByIdCart = async (req, res) => {
   }
 };
 
+export const deleteProduct = async (req, res) => {
+  try {
+    const { userId, productId } = req.body;
+    let cart = await Cart.findOne({ userId });
+    if (!cart) {
+      return res.status(404).json({ message: "Not found" });
+      1;
+    }
+    cart.products = await cart.products.filter(
+      (product) =>
+        product.productId && product.productId.toString() !== productId
+    );
+
+    await cart.save();
+    res.status(200).json(cart);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 export const createCart = async (req, res) => {
   try {
     const { userId, productId, quantity } = req.body;
@@ -60,7 +90,12 @@ export const inscreaseQuantity = async (req, res) => {
     if (!product) {
       return res.status(404).json([]).json({ message: "Not found" });
     }
-    product.quantity++;
+    if (product.quantity < 10) {
+      product.quantity++;
+    } else if (product.quantity >= 10) {
+      product.quantity = 10;
+    }
+
     await cart.save();
     return res.status(200).json(product);
   } catch (error) {
