@@ -6,7 +6,7 @@ const Banner = () => {
       {" "}
       <section className="banner">
         <img
-          src="https://picsum.photos/id/376/1440/500"
+          src="https://i.pinimg.com/564x/be/33/f4/be33f4af59e4b96bd535802aa173e89c.jpg"
           alt="#"
           className="banner__img"
         />
