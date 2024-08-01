@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createCart,
+  deleteProduct,
   descreaseQuantity,
   getByIdCart,
   inscreaseQuantity,
@@ -11,7 +12,7 @@ CartRoute.get("/:userId", getByIdCart);
 
 CartRoute.post("/add-to-cart", createCart);
 
-CartRoute.post("/add-to-cart");
+CartRoute.delete("/delete-product", deleteProduct);
 
 CartRoute.post("/inscrease", inscreaseQuantity);
 

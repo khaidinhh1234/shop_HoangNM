@@ -10,12 +10,12 @@ const Bill = () => {
               <div className="bill-info">
                 <div className="bill-details">
                   <div className="bill-title">
-                    <h1 className="bill-title-h1">Billing details</h1>
+                    <h1 className="bill-title-h1">Chi tiết thanh toán</h1>
                   </div>
                   <div className="bill-name">
                     <div className="bill-firstname">
                       <label htmlFor="firtname" className="bill-namelable">
-                        First Name
+                        Tên của bạn
                       </label>
                       <br />
                       <input
@@ -27,7 +27,7 @@ const Bill = () => {
                     </div>
                     <div className="bill-lastname">
                       <label htmlFor="lastname" className="bill-namelable">
-                        Last Name
+                        Họ của bạn
                       </label>
                       <br />
 
@@ -38,41 +38,10 @@ const Bill = () => {
                       />
                     </div>
                   </div>
-                  <div className="bill-form">
-                    <label htmlFor="comparyname" className="bill-formlable">
-                      Company Name (Optional)
-                    </label>
-                    <br />
 
-                    <input
-                      type="text"
-                      className="bill-forminput"
-                      placeholder="Tên Công ty (nếu có) "
-                    />
-                  </div>
-                  <div className="bill-form">
-                    <label htmlFor="countryname" className="bill-formlable">
-                      Country / Region
-                    </label>
-                    <br />
-                    <select className="bill-formselect">
-                      <option className="bill-formoption" value="#">
-                        Việt Nam
-                      </option>
-                      <option className="bill-formoption" value="#">
-                        China
-                      </option>
-                      <option className="bill-formoption" value="#">
-                        USA
-                      </option>
-                      <option className="bill-formoption" value="#">
-                        Nga
-                      </option>
-                    </select>
-                  </div>
                   <div className="bill-form">
                     <label htmlFor="comparyname" className="bill-formlable">
-                      Street address
+                      Địa chỉ đường phố
                     </label>
                     <br />
                     <input
@@ -83,7 +52,7 @@ const Bill = () => {
                   </div>
                   <div className="bill-form">
                     <label htmlFor="comparyname" className="bill-formlable">
-                      Town / City
+                      Thị trấn / Thành phố
                     </label>
                     <br />
                     <input
@@ -92,40 +61,10 @@ const Bill = () => {
                       placeholder="Thành Phố "
                     />
                   </div>
-                  <div className="bill-form">
-                    <label htmlFor="countryname" className="bill-formlable">
-                      Province
-                    </label>
-                    <br />
-                    <select className="bill-formselect">
-                      <option className="bill-formoption" value="#">
-                        Chương Mỹ
-                      </option>
-                      <option className="bill-formoption" value="#">
-                        Hà Nội
-                      </option>
-                      <option className="bill-formoption" value="#">
-                        Hà Nội
-                      </option>
-                      <option className="bill-formoption" value="#">
-                        Hà Nội
-                      </option>
-                    </select>
-                  </div>
+
                   <div className="bill-form">
                     <label htmlFor="comparyname" className="bill-formlable">
-                      ZIP code
-                    </label>
-                    <br />
-                    <input
-                      type="text"
-                      className="bill-forminput"
-                      placeholder="Mã bưu điện "
-                    />
-                  </div>
-                  <div className="bill-form">
-                    <label htmlFor="comparyname" className="bill-formlable">
-                      Phone
+                      Số điện thoại
                     </label>
                     <br />
                     <input
@@ -134,17 +73,7 @@ const Bill = () => {
                       placeholder="số điện thoại  "
                     />
                   </div>
-                  <div className="bill-form">
-                    <label htmlFor="emailname" className="bill-formlable">
-                      Email address
-                    </label>
-                    <br />
-                    <input
-                      type="email"
-                      className="bill-forminput"
-                      placeholder="Email "
-                    />
-                  </div>
+
                   <div className="bill-additional">
                     <input
                       type="text"
@@ -199,15 +128,13 @@ const Bill = () => {
                       <span className="bill-bank-black">
                         <img src="./public/images/checkout/cham.svg" alt="" />
                       </span>
-                      <span className="bill-bank_name">
-                        Direct Bank Transfer
-                      </span>
+                      <span className="bill-bank_name">Chuyển khoản</span>
                     </div>
                     <p className="bill-bank_des1">
-                      Make your payment directly into our bank account. Please
-                      use your Order ID as the payment reference. Your order
-                      will not be shipped until the funds have cleared in our
-                      account.
+                      Thanh toán trực tiếp vào tài khoản ngân hàng của chúng
+                      tôi. Vui lòng sử dụng Mã đơn hàng của bạn làm tham chiếu
+                      thanh toán. Đơn hàng của bạn sẽ không được giao cho đến
+                      khi tiền được chuyển vào tài khoản của chúng tôi.
                     </p>
                     <div className="bill-bank-radio">
                       <input
@@ -216,7 +143,7 @@ const Bill = () => {
                         className="bill-bank_input"
                       />
                       <span className="bill-bank_name">
-                        Direct Bank Transfer
+                        Chuyển khoản trực tiếp
                       </span>
                     </div>
                     <div className="bill-bank-radio">
@@ -225,17 +152,20 @@ const Bill = () => {
                         name="abc"
                         className="bill-bank_input"
                       />
-                      <span className="bill-bank_name">Cash On Delivery</span>
+                      <span className="bill-bank_name">
+                        Thanh toán khi giao hàng
+                      </span>
                     </div>
                     <p className="bill-bank_des2">
-                      Your personal data will be used to support your experience
-                      throughout this website, to manage access to your account,
-                      and for other purposes described in our privacy policy.
+                      Dữ liệu cá nhân của bạn sẽ được sử dụng để hỗ trợ trải
+                      nghiệm của bạn trên toàn bộ trang web này, để quản lý
+                      quyền truy cập vào tài khoản của bạn và cho các mục đích
+                      khác được mô tả trong chính sách bảo mật của chúng tôi.
                     </p>
                   </div>
                   <div className="bill-btn">
                     <button type="submit" className="bill-button">
-                      Place order
+                      Đặt hàng
                     </button>
                   </div>
                 </div>
