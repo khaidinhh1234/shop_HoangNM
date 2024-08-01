@@ -73,14 +73,12 @@ export const Signin = async (req, res) => {
 
     const refreshToken = await GenerateRefreshToken(user._id);
 
-    return res
-      .status(StatusCodes.OK)
-      .json({
-        accessToken,
-        refreshToken,
-        user,
-        message: "Đăng nhập thành công",
-      });
+    return res.status(StatusCodes.OK).json({
+      accessToken,
+      refreshToken,
+      user,
+      message: "Đăng nhập thành công",
+    });
   } catch (error) {
     return res
       .status(StatusCodes.BAD_REQUEST)
@@ -132,4 +130,49 @@ export const refreshToken = async (req, res) => {
 export const isTokenBlacklisted = async (token) => {
   const tokenInBlacklist = await BlackListToken.findOne({ token });
   return !!tokenInBlacklist;
+};
+export const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+export const updateUser = async (req, res) => {
+  try {
+    const { error } = LoginSchema.validate(req.body, {
+      abortEarly: false,
+    });
+    if (error) {
+      const messages = error.details.map((i) => i.message);
+      return res.status(StatusCodes.BAD_REQUEST).json({ messages });
+    } else {
+      const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
+      res.status(200).json(user);
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+export const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+export const getAllUsers = async (req, res) => {
+  try {
+    const user = await User.find();
+    if (user.length === 0) {
+      return res.status(404).json({ message: "không có user" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
