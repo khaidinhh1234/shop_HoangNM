@@ -20,7 +20,7 @@ export const createOrder = async (req, res) => {
 };
 export const getAllOrder = async (req, res) => {
   try {
-    const orders = await Order.find();
+    const orders = await Order.find().populate("userId");
     if (orders.length === 0) {
       return res.status(200).json([]);
     }

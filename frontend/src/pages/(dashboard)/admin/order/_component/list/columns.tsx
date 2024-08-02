@@ -15,7 +15,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { IProduct } from "@/common/types/product";
 import { Button } from "@/components/ui/button";
-
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,7 +27,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { message } from "antd";
 import { Link } from "react-router-dom";
-
+import useMutate from "@/common/hook/useMutate";
 import instance from "@/configs/axios";
 
 export const columns: ColumnDef<IProduct>[] = [
@@ -36,116 +36,151 @@ export const columns: ColumnDef<IProduct>[] = [
     header: "ID",
     cell: ({ row }) => <div>{row.index + 1}</div>,
   },
+
   {
-    accessorKey: "feature_image",
-    header: "Ảnh sản phẩm",
+    accessorKey: "avatar",
+    header: "Avatar",
     cell: ({ row }: any) => (
       <img
-        src={row.original.feature_image}
+        src={row.original.userId.avatar}
         alt=""
         className="w-20 h-20 p-2 bg-gray-100 rounded-xl"
       />
     ),
   },
   {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => (
-      <div className=" font-semibold truncate w-40">{row.getValue("name")}</div>
-    ),
-  },
-
-  {
-    accessorKey: "category",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Category
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    accessorKey: "email",
+    header: "Tài khoản ",
     cell: ({ row }: any) => (
-      <div className="ml-5">
-        {row.original.category
-          ? row.original?.category?.name
-          : " không có danh muc"}
+      <div className=" font-semibold truncate w-40">
+        {row.original?.userId?.email}
       </div>
     ),
   },
   {
-    accessorKey: "regular_price",
+    accessorKey: "name",
+    header: "Tên người nhận hàng",
+    cell: ({ row }: any) => (
+      <div className=" font-semibold truncate w-40">
+        {row.original?.customerName?.name}
+      </div>
+    ),
+  },
+
+  // {
+  //   accessorKey: "category",
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button
+  //         variant="ghost"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         Category
+  //         <CaretSortIcon className="ml-2 h-4 w-4" />
+  //       </Button>
+  //     );
+  //   },
+  //   cell: ({ row }: any) => (
+  //     <div className="ml-5">
+  //       {row.original.category
+  //         ? row.original?.category?.name
+  //         : " không có danh muc"}
+  //     </div>
+  //   ),
+  // },
+  {
+    accessorKey: "phone",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Giá
-          <CaretSortIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
+      return <div className=""> Số điện thoại</div>;
     },
     cell: ({ row }: any) => (
       <div className="capitalize truncate ">
-        {row.original.regular_price.toLocaleString("vn-VN")} VNĐ
+        +84{row.original.customerName.phone}
       </div>
     ),
   },
   {
-    accessorKey: "discount",
-    header: "discount",
+    accessorKey: "city",
+    header: "Địa chỉ",
 
-    cell: ({ row }) => (
+    cell: ({ row }: any) => (
       <div className="capitalize truncate ml-3">
-        {row.original.discount.toLocaleString("vn-VN")} VNĐ
+        {row.original?.customerName?.city}
       </div>
     ),
   },
   {
-    accessorKey: "Description",
-    header: "Description",
-    cell: ({ row }) => (
-      <div className="capitalize truncate w-40">{row.original.description}</div>
-    ),
+    accessorKey: "products ",
+    header: "Sản phẩm",
+    cell: ({ row }: any) =>
+      row?.original?.items?.map((product: any, index: number) => (
+        <div key={index} className="flex items-center space-x-2">
+          {/* <div
+            className="font-semibold truncate w-20 border my-1"
+            onClick={() => console.log(product._id)}
+          >
+            {`sản phẩm  ${index + 1}`}
+          </div> */}
+          <AlertDialog>
+            <AlertDialogTrigger>
+              {" "}
+              <div className="font-semibold truncate w-26  border border-gray-950 hover:text-white hover:bg-black rounded-md my-1 px-2 py-1">
+                {`sản phẩm  ${index + 1}`}
+              </div>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                {" "}
+                <AlertDialogFooter>
+                  <AlertDialogAction className="w-10 bg-red-600">
+                    X
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+                <AlertDialogTitle className="">{product.name}</AlertDialogTitle>
+                <AlertDialogDescription className="text-xl">
+                  Số lượng {product.quantity} , Giá sản phẩm{" "}
+                  {product.regular_price.toLocaleString()} VND
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
+      )),
   },
 
-  {
-    accessorKey: "countInStock",
-    header: "countInStock",
-    cell: ({ row }) => {
-      const amount = row.original.countIn_stock;
-      // console.log(amount);
-      return <div className=" font-medium">{amount.toLocaleString()} sp</div>;
-    },
-  },
-  {
-    accessorKey: "featured",
-    header: "featured",
-    cell: ({ row }) => {
-      // const { mutate } = useMutate({
-      //   action: "products",
-      //   id: row.original._id,
-      // });
-      return (
-        <div>{row.original.featured}</div>
-        /* <Checkbox
-            checked={row.original.featured}
-            onClick={() =>
-              mutate({
-                ...row.original,
-                featured: !row.original.featured,
-              } as any)
-            }
-          >
-            Checkbox
-          </Checkbox> */
-      );
-    },
-  },
+  // {
+  //   accessorKey: "countInStock",
+  //   header: "countInStock",
+  //   cell: ({ row }) => {
+  //     const amount = row.original.countIn_stock;
+  //     // console.log(amount);
+  //     return <div className=" font-medium">{amount.toLocaleString()} sp</div>;
+  //   },
+  // },
+  // {
+  //   accessorKey: "featured",
+  //   header: "featured",
+  //   cell: ({ row }) => {
+  //     // const { mutate } = useMutate({
+  //     //   action: "products",
+  //     //   id: row.original._id,
+  //     // });
+  //     return (
+  //       <div>{row.original.featured}</div>
+  //       /* <Checkbox
+  //           checked={row.original.featured}
+  //           onClick={() =>
+  //             mutate({
+  //               ...row.original,
+  //               featured: !row.original.featured,
+  //             } as any)
+  //           }
+  //         >
+  //           Checkbox
+  //         </Checkbox> */
+  //     );
+  //   },
+  // },
   {
     id: "actions",
     enableHiding: false,

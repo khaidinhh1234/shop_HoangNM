@@ -15,7 +15,7 @@ import ContectPage from "@/pages/(website)/contect/contect";
 import { Route, Routes } from "react-router-dom";
 
 import ThankyouPage from "@/pages/(dashboard)/user/home/_component/thankyou";
-import OrderPage from "@/pages/(website)/order/order";
+
 import ForgotPassword from "@/pages/(auth)/forgotPassword";
 import Users from "@/pages/(dashboard)/admin/users/Users";
 import UserForm from "@/pages/(dashboard)/admin/users/UserForm";
@@ -29,7 +29,12 @@ import CategoryAdd from "@/pages/(dashboard)/admin/categories/_component.tsx/add
 import CategoryEdit from "@/pages/(dashboard)/admin/categories/_component.tsx/edit";
 import LayoutAdmin from "@/pages/(dashboard)/admin/Layoutadmin";
 import DetailPage from "@/pages/(website)/detail/detail";
+
+import OrdersPage from "@/pages/(dashboard)/admin/order/page";
+import OrderPagehome from "@/pages/(website)/order/order";
+
 import SearchComponent from "@/components/Search";
+
 const Router = () => {
   return (
     <>
@@ -48,7 +53,7 @@ const Router = () => {
               <Route path="signin" element={<Signin />}></Route>
               <Route path="signup" element={<Signup />}></Route>
               <Route path="/forgotPassword" element={<ForgotPassword />} />
-              <Route path="order" element={<OrderPage />}></Route>
+              <Route path="orders" element={<OrderPagehome />}></Route>
               <Route path="thankyou" element={<ThankyouPage />}></Route>{" "}
             </Route>
           </Route>
@@ -71,6 +76,8 @@ const Router = () => {
             <Route path="category" element={<CategoryList />}></Route>
             <Route path="category/add" element={<CategoryAdd />}></Route>
             <Route path="category/edit/:id" element={<CategoryEdit />}></Route>
+            <Route path="orders" element={<OrdersPage />}></Route>
+
             {/* </Route> */}
           </Route>
         </Route>
