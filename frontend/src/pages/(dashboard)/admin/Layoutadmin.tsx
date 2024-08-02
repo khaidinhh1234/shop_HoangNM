@@ -50,10 +50,14 @@ const items: MenuItem[] = [
       <DesktopOutlined />
     </Link>
   ),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
+  getItem(
+    "Order",
+    "4",
+    <Link to={"/admin/orders"}>
+      {" "}
+      <DesktopOutlined />
+    </Link>
+  ),
   getItem("Files", "9", <FileOutlined />),
 ];
 

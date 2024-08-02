@@ -2,7 +2,7 @@ export interface IProduct {
   productId: string | number | undefined;
   _id?: number | string;
   name: string;
-  feature_image: string;
+  feature_image?: string[];
   category?: string;
   quantity?: number;
   regular_price: number;
@@ -11,5 +11,5 @@ export interface IProduct {
   gallery?: string[];
   featured: boolean;
   quality: number;
-  countInStock: number;
+  countIn_stock: number;
 }
