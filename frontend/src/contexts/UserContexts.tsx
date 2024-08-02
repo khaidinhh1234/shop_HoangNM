@@ -18,7 +18,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     (async () => {
       const { data } = await instance.get(`/v1/auth/users`);
-      console.log(data);
+
       dispatch({ type: "GET_USERS", payload: data });
     })();
   }, []);

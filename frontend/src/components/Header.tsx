@@ -6,11 +6,19 @@ import {
   Logo,
 } from "@/components/Icons";
 import { AuthContext, AuthContextType } from "@/contexts/AuthContext";
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
-const Header = () => {
+const Header: React.FC = () => {
   const { user, logout } = useContext(AuthContext) as AuthContextType;
+  ///
+  const [showTable, setShowTable] = useState(false);
+
+  const handleToggleTable = () => {
+    setShowTable((prevShowTable) => !prevShowTable);
+  };
+
+  ///
   return (
     <>
       {" "}
@@ -47,18 +55,44 @@ const Header = () => {
                     Contact
                   </NavLink>
                 </li>
+                {user?.role === "admin" && (
+                  <li className="main-menu__item">
+                    <Link className="main-menu_link" to="/admin">
+                      Admin
+                    </Link>
+                  </li>
+                )}
               </ul>
             </nav>
             <div className="header-items">
               <div className="header-item-user">
                 {user ? (
-                  <>
-                    <span className="fix-name">Welcome, {user?.name}</span>
-                    <br />
-                    <button className="fw-bolder " onClick={logout}>
-                      Logout
+                  <div>
+                    <button onClick={handleToggleTable}>
+                      <img src={user?.avatar} alt="" width="50px" />
                     </button>
-                  </>
+                    {showTable! && (
+                      <table className="fixAvatar">
+                        <ul className="main-menu__list">
+                          <li className="main-menu__item">
+                            <Link
+                              className="fixLink"
+                              to={`/usersEdit/${user?._id}`}
+                            >
+                              Sửa thông tin
+                            </Link>
+                          </li>
+
+                          <li className="main-menu__item">
+                            <button className="fixLink" onClick={logout}>
+                              Logout
+                              {!showTable}
+                            </button>
+                          </li>
+                        </ul>
+                      </table>
+                    )}
+                  </div>
                 ) : (
                   <>
                     <Link to="signup">

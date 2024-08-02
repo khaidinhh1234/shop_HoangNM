@@ -39,6 +39,33 @@ img {
     margin-left: 37px;
   }
 }
+.fixAvatar {
+  border: 1px solid black;
+  background-color: white;
+  width: auto;
+  position: absolute;
+}
+.fixAvatar ul {
+  display: grid;
+}
+.fixAvatar ul li {
+  width: 150px;
+  height: 30px;
+}
+.fixAvatar ul li:hover {
+  transition: 0.2s ease-in-out;
+  background-color: #000;
+  .fixLink {
+    color: #f4f5f7;
+  }
+}
+.fixLink {
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #000;
+  margin-left: 25px;
+}
 .button-mobile {
   display: inline-block;
   margin: 0 20px;

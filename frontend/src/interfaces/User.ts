@@ -4,5 +4,7 @@ export interface User {
   email: string;
   password: string;
   confirmPassword?: string;
+  avatar?: string;
   role?: "admin" | "member";
 }
+export type IUser = Pick<User, "name" | "email" | "password" | "avatar">;

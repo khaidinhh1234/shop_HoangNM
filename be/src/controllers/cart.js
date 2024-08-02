@@ -1,6 +1,5 @@
 import { StatusCodes } from "http-status-codes";
 import Cart from "../models/Cart";
-import { reducer } from "./../../../shop_HoangNM/frontend/src/components/ui/use-toast";
 
 export const getByIdCart = async (req, res) => {
   try {
