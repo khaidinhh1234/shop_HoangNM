@@ -1,4 +1,5 @@
 import instance from "@/configs/axios";
+import { AuthContext, AuthContextType } from "@/contexts/AuthContext";
 import { UserContext, UserContextType } from "@/contexts/UserContexts";
 import { User } from "@/interfaces/User";
 import { userSchema } from "@/untils/validations";
@@ -8,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
 const UserForm = () => {
-  const { handleUser } = useContext(UserContext) as UserContextType;
+  const { user, handleUser } = useContext(AuthContext) as AuthContextType;
   const { id } = useParams();
   const {
     register,
@@ -18,6 +19,7 @@ const UserForm = () => {
   } = useForm<User>({
     resolver: zodResolver(userSchema),
   });
+
   if (id) {
     useEffect(() => {
       (async () => {
@@ -70,6 +72,15 @@ const UserForm = () => {
           {errors.password && (
             <span className="text-danger">{errors.password.message}</span>
           )}
+        </div>
+        <div className="mb-3">
+          <img src={user?.avatar} alt={user?.avatar} width="300px" />
+
+          <input
+            className="form-control"
+            type="text"
+            {...register("avatar", { required: true })}
+          />
         </div>
 
         <div className="mb-3">
