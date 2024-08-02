@@ -69,7 +69,7 @@ const Header = () => {
               </div>
               <div className="header-item-user">
                 <span>
-                  <a href="#">
+                  <a href="/search">
                     <img src={IconSearch} />
                   </a>
                 </span>

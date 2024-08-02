@@ -30,7 +30,7 @@ const ShopPage = () => {
       <LimitWeb />
 
       <Category></Category>
-      <section className="news">
+      {/* <section className="news">
         <div className="container">
           <div className="section-body">
             <div className="products-list">
@@ -106,8 +106,8 @@ const ShopPage = () => {
             </div>{" "}
           </div>{" "}
         </div>
-      </section>
-      {/* <New></New> */}
+      </section> */}
+      <New></New>
       <Services />
     </div>
   );
