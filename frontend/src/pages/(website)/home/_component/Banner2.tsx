@@ -1,3 +1,4 @@
+import { banner2 } from "@/assets/img";
 import React from "react";
 
 const Banner2 = () => {
@@ -5,11 +6,7 @@ const Banner2 = () => {
     <>
       {" "}
       <section className="banner2">
-        <img
-          src="https://picsum.photos/id/20/1440/500"
-          alt=""
-          className="banner2__img"
-        />
+        <img src={banner2} alt="" className="w-full" />
       </section>
     </>
   );
