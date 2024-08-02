@@ -3,7 +3,7 @@ export interface IProduct {
   _id?: number | string;
   name: string;
   feature_image: string;
-  category?: string;
+  // category?: string;
   quantity?: number;
   regular_price: number;
   description: string;
@@ -12,4 +12,5 @@ export interface IProduct {
   featured: boolean;
   quality: number;
   countInStock: number;
+  category?: ICategory;
 }

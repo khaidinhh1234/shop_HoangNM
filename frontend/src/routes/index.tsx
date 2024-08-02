@@ -29,6 +29,7 @@ import CategoryAdd from "@/pages/(dashboard)/admin/categories/_component.tsx/add
 import CategoryEdit from "@/pages/(dashboard)/admin/categories/_component.tsx/edit";
 import LayoutAdmin from "@/pages/(dashboard)/admin/Layoutadmin";
 import DetailPage from "@/pages/(website)/detail/detail";
+import SearchComponent from "@/components/Search";
 const Router = () => {
   return (
     <>
@@ -38,6 +39,7 @@ const Router = () => {
             <Route path="/" element={<LayoutHome />}>
               <Route index element={<PageHome />}></Route>
               <Route path="shop" element={<ShopPage />}></Route>
+              <Route path="search" element={<SearchComponent />}></Route>
               <Route path="detail/:id" element={<DetailPage />}></Route>
               <Route path="category" element={<CategoryDetail />}></Route>
               <Route path="about" element={<AboutPage />}></Route>
