@@ -1,12 +1,11 @@
 import { StatusCodes } from "http-status-codes";
 import Cart from "../models/Cart";
-import { reducer } from "./../../../shop_HoangNM/frontend/src/components/ui/use-toast";
 
 export const getByIdCart = async (req, res) => {
   try {
     const { userId } = req.params;
     const cart = await Cart.findOne({ userId }).populate("products.productId");
-    if (cart.length === 0) {
+    if (cart.products === 0) {
       return res.status(200).json([]);
     }
     const carts = {
@@ -20,6 +19,10 @@ export const getByIdCart = async (req, res) => {
           quantity: product.quantity,
         };
       }),
+      totalQuantity: cart.products.reduce(
+        (total, product) => total + product.quantity,
+        0
+      ),
       totalPrice: cart.products.reduce(
         (total, product) =>
           total + product.productId.regular_price * product.quantity,

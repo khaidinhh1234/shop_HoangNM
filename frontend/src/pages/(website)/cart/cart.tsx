@@ -1,3 +1,4 @@
+import { ship } from "@/assets/img";
 import { useCart, useCartMutate } from "@/common/hook/useCart";
 import { useLocalStorage } from "@/common/hook/useStoratge";
 import { toast } from "react-toastify";
@@ -14,7 +15,7 @@ const Cart = () => {
   if (isError) {
     return <div>Error: {error?.message}</div>;
   }
-  console.log(cart);
+
   return (
     <div>
       <section className="cart">
@@ -22,12 +23,12 @@ const Cart = () => {
           <div className="cart-info">
             <div className="cart-table">
               <div className="cart-table-title">
-                <span className="cart-table-title__name">Product</span>
-                <span className="cart-table-title__price">Price</span>
-                <span className="cart-table-title__name">Quantity</span>
-                <span className="cart-table-title__name">Subtotal</span>
+                <span className="cart-table-title__name">Sản phẩm</span>
+                <span className="cart-table-title__price">Giá</span>
+                <span className="cart-table-title__name">Số Lượng</span>
+                <span className="mx-14">Tổng</span>
               </div>
-              {cart.products &&
+              {cart?.products && cart?.products.length > 0 ? (
                 cart?.products.map((item: string | any) => (
                   <div className="flex items-center  gap-12 my-4">
                     <div className="  ">
@@ -38,7 +39,9 @@ const Cart = () => {
                       />
                     </div>{" "}
                     <span className="truncate w-32">{item.name}</span>
-                    <span className="">{item.regular_price}</span>
+                    <span className="">
+                      {item.regular_price.toLocaleString()}
+                    </span>
                     <div className="lg:mt-0 mb:mt-[12.5px] flex items-center *:grid *:place-items-center *:lg:w-9 *:lg:h-9 *:mb:w-8 *:mb:h-8 ">
                       <button
                         onClick={() =>
@@ -101,7 +104,9 @@ const Cart = () => {
                     </div>
                     <div className="flex">
                       <span className="mx-2">
-                        {item.regular_price * item.quantity}đ
+                        {(item.regular_price * item.quantity).toLocaleString(
+                          "vn-VN"
+                        )}{" "}
                       </span>
                       <button
                         className="ml-20"
@@ -127,21 +132,28 @@ const Cart = () => {
                       </button>
                     </div>
                   </div>
-                ))}
+                ))
+              ) : (
+                <div className="empty-cart text-2xl text-center mt-10 mx-32 font-semibold">
+                  <p>
+                    <img src={ship} alt="" />
+                  </p>
+                </div>
+              )}
             </div>
             <div className="cart-totals">
-              <div className="cart-totals-title">Cart Totals</div>
+              <div className="cart-totals-title">Tổng số giỏ hàng</div>
               <div className="cart-totals-info">
                 <div className="cart-totals_item">
-                  <span className="cart-totals_name">Subtotal</span>
-                  <span className="cart-totals_name">Total</span>
+                  <span className="cart-totals_name">Tổng </span>
+                  <span className="cart-totals_name">Tổng cộng :</span>
                 </div>
                 <div className="cart-totals_item">
                   <span className="cart-totals_priceA">
-                    {cart?.totalPrice}đ
+                    {cart?.totalPrice.toLocaleString()} VND
                   </span>
                   <span className="cart-totals_priceB">
-                    {cart?.finalTotalPrice}đ
+                    {cart?.finalTotalPrice.toLocaleString()} VND
                   </span>
                 </div>
               </div>
