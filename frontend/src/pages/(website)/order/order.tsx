@@ -1,7 +1,7 @@
 import { Services } from "@/components";
 import Banner2 from "@/pages/(website)/home/_component/Banner2";
 import Bill from "@/pages/(website)/order/Bill";
-const OrderPage = () => {
+const OrderPagehome = () => {
   return (
     <>
       <Banner2 />
@@ -11,4 +11,4 @@ const OrderPage = () => {
   );
 };
 
-export default OrderPage;
+export default OrderPagehome;

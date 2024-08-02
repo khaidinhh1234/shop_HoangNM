@@ -160,7 +160,7 @@ const Cart = () => {
               <div className="cart-totals">
                 <button className="cart-totals_btn">
                   <a
-                    href="/order"
+                    href="/orders"
                     className={`cart-totals_link border hover:border-[#b88e2f] hover:bg-[#b88e2f]/90 border-black hover:text-white px-10 py-3 rounded-2xl ${
                       cart.products.length === 0 ? "cursor-not-allowed" : ""
                     }`}

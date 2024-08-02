@@ -3,7 +3,7 @@ import { ICategory } from "@/common/types/category";
 
 import { IProduct } from "@/common/types/product";
 
-import { Loading3QuartersOutlined } from "@ant-design/icons";
+import { Loading3QuartersOutlined, PlusOutlined } from "@ant-design/icons";
 import { useMutation } from "@tanstack/react-query";
 import {
   Breadcrumb,
@@ -11,14 +11,19 @@ import {
   Checkbox,
   Form,
   FormProps,
+  Image,
   Input,
   InputNumber,
   message,
   Select,
+  Upload,
+  UploadFile,
+  UploadProps,
 } from "antd";
 
 import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -62,9 +67,49 @@ const ProductsEdit = () => {
       });
     },
   });
-  const onFinish: FormProps<IProduct>["onFinish"] = (values: any) => {
-    mutate(values);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  // console.log(fileList);
+  const getBase64 = (file: any): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = (error) => reject(error);
+    });
+
+  const handlePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj as any);
+    }
+
+    setPreviewImage(file.url || (file.preview as string));
+    setPreviewOpen(true);
   };
+
+  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+    setFileList(newFileList);
+  useEffect(() => {
+    if (pro && pro.feature_image) {
+      // Chuyển đổi pro.feature_image thành cấu trúc fileList
+      const images = pro.feature_image;
+      images.map((image: any) => setFileList([image]));
+    }
+  }, [pro]);
+
+  const onFinish: FormProps<IProduct>["onFinish"] = (values: any) => {
+    const feature_image = fileList
+      .filter((file) => file.status === "done")
+      .map((file) => file.response?.secure_url);
+    mutate({ ...values, feature_image });
+  };
+  const uploadButton = (
+    <button style={{ border: 0, background: "none" }} type="button">
+      <PlusOutlined />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </button>
+  );
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -192,14 +237,29 @@ const ProductsEdit = () => {
                     className=""
                     label="Ảnh nổi bật "
                     name="feature_image"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Tên sản phẩm bắt buộc phải nhập!",
-                      },
-                    ]}
                   >
-                    <Input placeholder="Nhập tên sản phẩm" />
+                    <Upload
+                      action="https://api.cloudinary.com/v1_1/dpypwbeis/image/upload"
+                      data={{ upload_preset: "ml_default" }}
+                      listType="picture-card"
+                      fileList={fileList}
+                      onPreview={handlePreview}
+                      onChange={handleChange}
+                    >
+                      {fileList.length >= 1 ? null : uploadButton}
+                    </Upload>
+                    {previewImage && (
+                      <Image
+                        wrapperStyle={{ display: "none" }}
+                        preview={{
+                          visible: previewOpen,
+                          onVisibleChange: (visible) => setPreviewOpen(visible),
+                          afterOpenChange: (visible) =>
+                            !visible && setPreviewImage(""),
+                        }}
+                        src={previewImage}
+                      />
+                    )}{" "}
                   </Form.Item>{" "}
                   <Form.Item
                     label="Sản phẩm nổi bật"

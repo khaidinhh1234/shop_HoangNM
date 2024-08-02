@@ -181,7 +181,7 @@ const Bill = () => {
                         <div className="grid grid-cols-4 p-2 border-2 ">
                           <div className="p-2 col-span-1">
                             <img
-                              src={product.feature_image}
+                              // src={product.feature_image}
                               alt=""
                               className="w-full h-24 p-1"
                             />

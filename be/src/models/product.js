@@ -18,10 +18,12 @@ const ProductSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    feature_image: {
-      type: String,
-      required: true,
-    },
+    feature_image: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     gallery_images: {
       type: Array,
     },
@@ -35,6 +37,10 @@ const ProductSchema = new mongoose.Schema(
     },
     description: {
       type: String,
+    },
+    featured: {
+      type: String,
+      default: "false",
     },
   },
   { timestamps: true, versionKey: false }
