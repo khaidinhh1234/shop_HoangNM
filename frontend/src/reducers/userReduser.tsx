@@ -21,7 +21,7 @@ const userReducer = (state: State, action: Action) => {
       return {
         ...state,
         users: state.users.map((user) =>
-          user._id === action.payload.id ? action.payload : user
+          user._id === action.payload._id ? action.payload : user
         ),
       };
 

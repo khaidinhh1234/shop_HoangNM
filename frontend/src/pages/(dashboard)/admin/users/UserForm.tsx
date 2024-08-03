@@ -1,15 +1,19 @@
 import instance from "@/configs/axios";
-import { UserContext, UserContextType } from "@/contexts/UserContexts";
+import { AuthContext, AuthContextType } from "@/contexts/AuthContext";
+
 import { User } from "@/interfaces/User";
 import { userSchema } from "@/untils/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext, useEffect } from "react";
+
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UserForm = () => {
-  const { handleUser } = useContext(UserContext) as UserContextType;
+  const [avatar, setAvatar] = useState<string>("");
+  const { user } = useContext(AuthContext) as AuthContextType;
   const { id } = useParams();
+  const nav = useNavigate();
   const {
     register,
     formState: { errors },
@@ -18,19 +22,37 @@ const UserForm = () => {
   } = useForm<User>({
     resolver: zodResolver(userSchema),
   });
+
   if (id) {
     useEffect(() => {
       (async () => {
         const { data } = await instance.get(`/v1/auth/users/${id}`);
+        setAvatar(data.avatar);
         reset(data);
       })();
     }, [id]);
   }
 
+  const onSubmit = async (data: User) => {
+    try {
+      const res = await instance.put(`/v1/auth/users/${id}`, {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        avatar: data.avatar,
+      });
+      console.log(res.data);
+      alert("Sua thành công");
+      nav("/");
+    } catch (error: any) {
+      console.log(error);
+      alert(error.response?.data?.message || "Error!");
+    }
+  };
   return (
     <div>
       <h1>Edit user</h1>
-      <form onSubmit={handleSubmit((data) => handleUser({ ...data, _id: id }))}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Name
@@ -69,6 +91,18 @@ const UserForm = () => {
           />
           {errors.password && (
             <span className="text-danger">{errors.password.message}</span>
+          )}
+        </div>
+        <div className="mb-3">
+          <img src={avatar} alt="" width="300px" />
+
+          <input
+            className="form-control"
+            type="text"
+            {...register("avatar", { required: true })}
+          />
+          {errors.avatar && (
+            <span className="text-danger">{errors.avatar.message}</span>
           )}
         </div>
 

@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import { LoginSchema, RegisterSchema } from "../schema/auth.js";
+import { LoginSchema, RegisterSchema, UserSchema } from "../schema/auth.js";
 import BlackListToken from "../models/Black-list-token.js";
 
 export const Signup = async (req, res) => {
@@ -141,16 +141,18 @@ export const deleteUser = async (req, res) => {
 };
 export const updateUser = async (req, res) => {
   try {
-    const { error } = LoginSchema.validate(req.body, {
+    const { error } = UserSchema.validate(req.body, {
       abortEarly: false,
     });
     if (error) {
       const messages = error.details.map((i) => i.message);
       return res.status(StatusCodes.BAD_REQUEST).json({ messages });
     } else {
-      const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      });
+      const { name, email, password, avatar } = req.body;
+
+      const hashPassword = bcrypt.hashSync(password, 10);
+      req.body.password = hashPassword;
+      const user = await User.findByIdAndUpdate(req.params.id, req.body);
       res.status(200).json(user);
     }
   } catch (error) {
