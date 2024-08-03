@@ -25,7 +25,8 @@ const UserSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: "../upload/avata.jpg",
+      default:
+        "https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg",
     },
   },
   { timestamps: true, versionKey: false }

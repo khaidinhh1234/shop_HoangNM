@@ -3,6 +3,7 @@ import { Banner, Blog, New, Services, Shop } from "@/components";
 const HomePage1 = () => {
   return (
     <div>
+      {" "}
       <Banner />
       <div className="container">
         <div className="section-heading">

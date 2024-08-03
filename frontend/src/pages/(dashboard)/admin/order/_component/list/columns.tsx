@@ -67,27 +67,6 @@ export const columns: ColumnDef<IProduct>[] = [
     ),
   },
 
-  // {
-  //   accessorKey: "category",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         variant="ghost"
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //       >
-  //         Category
-  //         <CaretSortIcon className="ml-2 h-4 w-4" />
-  //       </Button>
-  //     );
-  //   },
-  //   cell: ({ row }: any) => (
-  //     <div className="ml-5">
-  //       {row.original.category
-  //         ? row.original?.category?.name
-  //         : " không có danh muc"}
-  //     </div>
-  //   ),
-  // },
   {
     accessorKey: "phone",
     header: ({ column }) => {
@@ -147,7 +126,37 @@ export const columns: ColumnDef<IProduct>[] = [
         </div>
       )),
   },
-
+  {
+    accessorKey: "status",
+    header: ({ column }) => {
+      return <div> Trạng thái DH</div>;
+    },
+    cell: ({ row }: any) => (
+      <div
+        className={` ${
+          row.original.status == "pending"
+            ? "text-white font-medium  border  bg-blue-700 rounded-xl text-center"
+            : row.original.status == "confirmed"
+            ? "text-white font-medium  border  bg-green-700 rounded-xl text-center"
+            : row.original.status == "shipped"
+            ? "text-white font-medium  border  bg-yellow-700 rounded-xl text-center"
+            : row.original.status == "delivered"
+            ? "text-white font-medium  border  bg-orange-700  rounded-xl text-center"
+            : "text-white font-medium  border  bg-red-700 rounded-xl text-center"
+        }`}
+      >
+        {row.original.status == "pending"
+          ? "Chờ xác nhận"
+          : row.original.status == "confirmed"
+          ? "xác nhận"
+          : row.original.status == "shipped"
+          ? "Đang giao hàng"
+          : row.original.status == "delivered"
+          ? "Đã giao hàng"
+          : "Đã hủy"}
+      </div>
+    ),
+  },
   // {
   //   accessorKey: "countInStock",
   //   header: "countInStock",
@@ -217,34 +226,37 @@ export const columns: ColumnDef<IProduct>[] = [
 
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <div className="relative flex cursor-default select-none items-center bg-white hover:text-white hover:bg-slate-600 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors  data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                  Remove
+                <div className="relative flex cursor-default select-none items-center  hover:text-white hover:bg-red-500 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors  data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                  Huỷ
                 </div>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogTitle>
+                    Bạn có chắc chắn nuốn hủy không{" "}
+                  </AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete
-                    your account and remove your data from our servers.
+                    Hành động này không thể hoàn tác.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel className="hover:bg-white bg-black hover:text-black text-white rounded-md shadow-sm shadow-black">
-                    Cancel
+                    Hủy
                   </AlertDialogCancel>
                   <AlertDialogAction
                     onClick={() => mutate(id!)}
-                    className="hover:bg-white bg-black hover:text-black text-white rounded-md shadow-sm shadow-black"
+                    className="hover:bg-white bg-red-500 hover:text-black text-white rounded-md shadow-sm shadow-black"
                   >
-                    Continue
+                    Xác nhận
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
 
-            <DropdownMenuItem>
-              <Link to={`edit/${id}`}>Update</Link>
+            <DropdownMenuItem className="">
+              <Link to={`edit/${id}`} className="no-underline hover:text-white">
+                Xác Nhận
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -1,85 +1,111 @@
-import { useState } from "react";
-import { Input, Button, List } from "antd";
-import instance from "@/configs/axios";
+import useUserQuery from "@/common/hook/userQuery";
+import { useSearchParams } from "react-router-dom";
+import { useLocalStorage } from "@/common/hook/useStoratge";
+import { useCartMutate } from "@/common/hook/useCart";
 
 const SearchComponent = () => {
-  const [search, setSearch] = useState<string>("");
-  const [results, setResults] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isInputEmpty, setIsInputEmpty] = useState<boolean>(false);
+  const [user] = useLocalStorage("user", {});
+  const userId = user?._id;
+  const { data: products, isLoading } = useUserQuery({ action: "products" });
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("query");
+  // products?.map((item: any) => {
+  //   console.log(item.featured);
+  // });
 
-  const handleSearch = async () => {
-    if (!search.trim()) {
-      setIsInputEmpty(true);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-    setIsInputEmpty(false);
-
-    try {
-      const response = await instance.get("/v1/search", {
-        params: { keyword: search },
-      });
-      setResults(response.data);
-      if (response.data.length === 0) {
-        setError("Không tìm thấy sản phẩm nào.");
-      }
-    } catch (err) {
-      setError("Có lỗi xảy ra khi tìm kiếm.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { mutate } = useCartMutate();
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className="flex flex-col items-center space-y-4 p-4">
-      <div className="flex items-center space-x-2">
-        <Input
-          placeholder="Nhập từ khóa tìm kiếm..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onPressEnter={handleSearch}
-          className={`w-96 h-12 px-4 border ${
-            isInputEmpty ? "border-red-500" : "border-gray-300"
-          } rounded-md`}
-        />
-        <Button
-          type="primary"
-          onClick={handleSearch}
-          loading={loading}
-          className="h-12 btn btn-primary"
-        >
-          Tìm kiếm
-        </Button>
-      </div>
-
-      {isInputEmpty && (
-        <div className="text-red-500">Vui lòng nhập từ khóa tìm kiếm.</div>
-      )}
-      {error && <div className="text-red-500">{error}</div>}
-
-      <List
-        className="w-full"
-        dataSource={results}
-        renderItem={(item) => (
-          <div className="flex items-center mb-4 p-4 border border-gray-300 rounded-md">
-            <img
-              src={item.feature_image}
-              alt={item.name}
-              className="w-24 h-24 object-cover rounded-md mr-4"
-            />
-            <div>
-              <div className="font-semibold text-lg">{item.name}</div>
-              <div className="text-gray-600">
-                Price: {item.regular_price} VND
+    <div>
+      <div className="container">
+        <div className="section-heading">
+          <h2 className="section-heading__title">Tìm kiếm sản phẩm</h2>
+        </div>
+        <div className="products-list">
+          {products
+            ?.filter((item: any) => {
+              return query
+                ? query.toLowerCase() === ""
+                  ? item
+                  : item.name.toLowerCase().includes(query)
+                  ? "not found"
+                  : item.name.toLowerCase().includes(query)
+                : item;
+            })
+            .map((product: any, index: number) => (
+              <div className="products-item" key={index}>
+                <div className="products-image">
+                  <img
+                    src={product.feature_image}
+                    alt="#"
+                    className="products__thumbnail"
+                  />
+                  {product.featured ? (
+                    <span className="products-sale  bg-green-600">New</span>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="products-info">
+                  <h3 className="products__name h-14">
+                    <a href="#" className="products__link  ">
+                      {product.name}
+                    </a>
+                  </h3>
+                  <a
+                    href="#"
+                    className="products__category line-clamp-3 max-w-xs "
+                  >
+                    {product.description}
+                  </a>
+                  <div className="products-price mt-4">
+                    <span className="products-price__new">
+                      {product.regular_price.toLocaleString()} VND
+                    </span>
+                    <del className="products-price__old">
+                      {product.discount.toLocaleString()} VND
+                    </del>
+                  </div>
+                </div>
+                <div className="products-actions">
+                  <button className="">
+                    <a
+                      href={`/detail/${product._id}`}
+                      className=" border  bg-white/50 rounded hover:bg-white text-black px-5 py-2 products-action__link "
+                    >
+                      Quick View
+                    </a>
+                  </button>
+                  <button
+                    className="btn products-action__addtocart"
+                    onClick={() =>
+                      mutate({
+                        action: "add-to-cart",
+                        product,
+                        quantity: 1,
+                        userId,
+                      })
+                    }
+                  >
+                    <p className="products-action__link border py-2 bg-white/50 rounded hover:bg-white ">
+                      Add to Cart
+                    </p>
+                  </button>
+                  <div className="products-actions-more *:mx-2">
+                    <span className="products-action__share">Share</span>
+                    <span className="products-action__compare">Compare</span>
+                    <span className="products-action__like">Like</span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        )}
-      />
+            ))}
+
+          {/*End .product-item*/}
+        </div>{" "}
+      </div>
     </div>
   );
 };

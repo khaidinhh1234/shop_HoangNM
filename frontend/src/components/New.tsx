@@ -80,17 +80,7 @@ const New = () => {
                             })
                           }
                         >
-                          <p
-                            className="products-action__link border py-2 bg-white/50 rounded hover:bg-white "
-                            onClick={() =>
-                              mutate({
-                                action: "add-to-cart",
-                                product,
-                                quantity: 1,
-                                userId,
-                              })
-                            }
-                          >
+                          <p className="products-action__link border py-2 bg-white/50 rounded hover:bg-white ">
                             Add to Cart
                           </p>
                         </button>

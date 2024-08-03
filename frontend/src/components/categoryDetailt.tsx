@@ -18,10 +18,6 @@ const CategoryDetail = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  if (isCategoryLoading || isProductLoading) {
-    return <div>Loading...</div>;
-  }
-
   const handleChange = (value: string) => {
     setSelectedCategory(value);
   };
@@ -37,6 +33,9 @@ const CategoryDetail = () => {
             product.category && product.category._id === selectedCategory
         );
 
+  if (isCategoryLoading || isProductLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       <section className="shop">
