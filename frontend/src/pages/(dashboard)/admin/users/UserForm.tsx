@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-
+import "../../../../sass/edit.scss";
 const UserForm = () => {
   const [avatar, setAvatar] = useState<string>("");
   const { user } = useContext(AuthContext) as AuthContextType;
@@ -50,66 +50,71 @@ const UserForm = () => {
     }
   };
   return (
-    <div>
-      <h1>Edit user</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Name
-          </label>
-          <input
-            className="form-control"
-            type="text"
-            {...register("name", { required: true })}
-          />
-          {errors.name && (
-            <span className="text-danger">{errors.name.message}</span>
-          )}
+    <div className="containerEdit">
+      <div className="sidebar">
+        <div className="avatar-container">
+          <img src={avatar} alt="Avatar" className="avatar" />
         </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
-            className="form-control"
-            type="email"
-            readOnly
-            {...register("email", { required: true })}
-          />
-          {errors.email && (
-            <span className="text-danger">{errors.email.message}</span>
-          )}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            className="form-control"
-            type="password"
-            {...register("password", { required: true })}
-          />
-          {errors.password && (
-            <span className="text-danger">{errors.password.message}</span>
-          )}
-        </div>
-        <div className="mb-3">
-          <img src={avatar} alt="" width="300px" />
+      </div>
+      <div className="content">
+        <h1>Account Settings</h1>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-group">
+            <label htmlFor="name" className="form-label">
+              Name
+            </label>
+            <input
+              className="form-control"
+              type="text"
+              {...register("name", { required: true })}
+            />
+            {errors.name && (
+              <span className="text-danger">{errors.name.message}</span>
+            )}
+          </div>
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
+            <input
+              className="form-control"
+              type="email"
+              readOnly
+              {...register("email", { required: true })}
+            />
+            {errors.email && (
+              <span className="text-danger">{errors.email.message}</span>
+            )}
+          </div>
+          <div className="form-group">
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              className="form-control"
+              type="password"
+              {...register("password", { required: true })}
+            />
+            {errors.password && (
+              <span className="text-danger">{errors.password.message}</span>
+            )}
+          </div>
+          <div className="form-group">
+            <input
+              className="form-control"
+              type="text"
+              {...register("avatar", { required: true })}
+            />
+            {errors.avatar && (
+              <span className="text-danger">{errors.avatar.message}</span>
+            )}
+          </div>
 
-          <input
-            className="form-control"
-            type="text"
-            {...register("avatar", { required: true })}
-          />
-          {errors.avatar && (
-            <span className="text-danger">{errors.avatar.message}</span>
-          )}
-        </div>
-
-        <div className="mb-3">
-          <button className="btn btn-primary w-100">Edit</button>
-        </div>
-      </form>
+          <div className="form-group">
+            <button className="btn btn-primary w-100">Edit</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
