@@ -18,7 +18,7 @@ const useMutate = ({ action, id }: { action: string; id: string | any }) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [action === "products" ? "Products_Key" : "Categories_Key"],
+        queryKey: [action === action ? action : "", id ? id : ""],
       });
       action === "products"
         ? message.open({

@@ -94,12 +94,6 @@ export const columns: ColumnDef<IProduct>[] = [
     cell: ({ row }: any) =>
       row?.original?.items?.map((product: any, index: number) => (
         <div key={index} className="flex items-center space-x-2">
-          {/* <div
-            className="font-semibold truncate w-20 border my-1"
-            onClick={() => console.log(product._id)}
-          >
-            {`sản phẩm  ${index + 1}`}
-          </div> */}
           <AlertDialog>
             <AlertDialogTrigger>
               {" "}
@@ -135,20 +129,20 @@ export const columns: ColumnDef<IProduct>[] = [
       <div
         className={` ${
           row.original.status == "pending"
-            ? "text-white font-medium  border  bg-blue-700 rounded-xl text-center"
+            ? "text-white font-medium  border  bg-blue-700 rounded-full text-center py-1"
             : row.original.status == "confirmed"
-            ? "text-white font-medium  border  bg-green-700 rounded-xl text-center"
+            ? "text-white font-medium  border  bg-green-700 rounded-xl text-center py-1"
             : row.original.status == "shipped"
-            ? "text-white font-medium  border  bg-yellow-700 rounded-xl text-center"
+            ? "text-white font-medium  border  bg-yellow-700 rounded-xl text-center py-1"
             : row.original.status == "delivered"
-            ? "text-white font-medium  border  bg-orange-700  rounded-xl text-center"
-            : "text-white font-medium  border  bg-red-700 rounded-xl text-center"
+            ? "text-white font-medium  border  bg-orange-700  rounded-xl text-center py-1"
+            : "text-white font-medium  border  bg-red-700 rounded-xl text-center py-1"
         }`}
       >
         {row.original.status == "pending"
-          ? "Chờ xác nhận"
+          ? "Chờ thanh toán"
           : row.original.status == "confirmed"
-          ? "xác nhận"
+          ? "đã thanh toán "
           : row.original.status == "shipped"
           ? "Đang giao hàng"
           : row.original.status == "delivered"
@@ -157,39 +151,7 @@ export const columns: ColumnDef<IProduct>[] = [
       </div>
     ),
   },
-  // {
-  //   accessorKey: "countInStock",
-  //   header: "countInStock",
-  //   cell: ({ row }) => {
-  //     const amount = row.original.countIn_stock;
-  //     // console.log(amount);
-  //     return <div className=" font-medium">{amount.toLocaleString()} sp</div>;
-  //   },
-  // },
-  // {
-  //   accessorKey: "featured",
-  //   header: "featured",
-  //   cell: ({ row }) => {
-  //     // const { mutate } = useMutate({
-  //     //   action: "products",
-  //     //   id: row.original._id,
-  //     // });
-  //     return (
-  //       <div>{row.original.featured}</div>
-  //       /* <Checkbox
-  //           checked={row.original.featured}
-  //           onClick={() =>
-  //             mutate({
-  //               ...row.original,
-  //               featured: !row.original.featured,
-  //             } as any)
-  //           }
-  //         >
-  //           Checkbox
-  //         </Checkbox> */
-  //     );
-  //   },
-  // },
+
   {
     id: "actions",
     enableHiding: false,
@@ -222,7 +184,7 @@ export const columns: ColumnDef<IProduct>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Quản trị</DropdownMenuLabel>
 
             <AlertDialog>
               <AlertDialogTrigger asChild>

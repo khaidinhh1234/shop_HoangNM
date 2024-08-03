@@ -8,7 +8,7 @@ const List = () => {
   const { data, isLoading, isError, error } = useUserQuery({
     action: "products",
   });
-
+  console.log(data);
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -33,7 +33,7 @@ const List = () => {
           <button>
             <Link
               to={"/admin/products/add"}
-              className="mr-5 hover:bg-black px-3 py-2 font-medium text-[16px] rounded-[5px] hover:text-white border border-black"
+              className="mr-5  hover:bg-black px-3 py-2 font-medium text-[16px] rounded-[5px] hover:text-white border border-black no-underline"
             >
               Add New Product
             </Link>

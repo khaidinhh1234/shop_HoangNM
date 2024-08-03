@@ -1,3 +1,4 @@
+import { boolean } from "joi";
 import mongoose, { Schema } from "mongoose";
 
 const ProductSchema = new mongoose.Schema(
@@ -39,8 +40,8 @@ const ProductSchema = new mongoose.Schema(
       type: String,
     },
     featured: {
-      type: String,
-      default: "false",
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true, versionKey: false }

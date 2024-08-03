@@ -8,11 +8,11 @@ export const Payment = async (req, res) => {
   var secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
   var orderInfo = "pay with MoMo";
   var partnerCode = "MOMO";
-  var redirectUrl = "http://localhost:5173/thankyou";
+  var redirectUrl = `http://localhost:5173/bill/${orderIdFromBody}`;
   var ipnUrl = "https://8518-27-79-186-18.ngrok-free.app/api/v1/callblack";
   var requestType = "payWithMethod";
   var amount = amounts;
-  var orderId = partnerCode + new Date().getTime();
+  var orderId = orderIdFromBody + new Date().getTime();
   var requestId = orderId;
   var extraData = "";
 

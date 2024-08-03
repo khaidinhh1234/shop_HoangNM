@@ -4,6 +4,8 @@ import "./sass/detail.scss";
 import "./sass/Trangchu.scss";
 import "./sass/cart.scss";
 import "./sass/checkout.scss";
+
+import "react-toastify/dist/ReactToastify.css";
 import "@/global.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";

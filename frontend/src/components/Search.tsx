@@ -1,14 +1,16 @@
 import useUserQuery from "@/common/hook/userQuery";
-import { useSearchParams } from "react-router-dom";
+
 import { useLocalStorage } from "@/common/hook/useStoratge";
 import { useCartMutate } from "@/common/hook/useCart";
+import { useSearchParams } from "react-router-dom";
 
 const SearchComponent = () => {
   const [user] = useLocalStorage("user", {});
   const userId = user?._id;
   const { data: products, isLoading } = useUserQuery({ action: "products" });
   const [searchParams] = useSearchParams();
-  const query = searchParams.get("query");
+  const query = searchParams.get("rau");
+
   // products?.map((item: any) => {
   //   console.log(item.featured);
   // });
@@ -35,6 +37,7 @@ const SearchComponent = () => {
                   : item.name.toLowerCase().includes(query)
                 : item;
             })
+
             .map((product: any, index: number) => (
               <div className="products-item" key={index}>
                 <div className="products-image">

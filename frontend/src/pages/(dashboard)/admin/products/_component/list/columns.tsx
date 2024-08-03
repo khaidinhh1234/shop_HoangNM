@@ -131,7 +131,7 @@ export const columns: ColumnDef<IProduct>[] = [
       //   id: row.original._id,
       // });
       return (
-        <div>{row.original.featured}</div>
+        <div>{row.original.featured ? "có" : "không"}</div>
         /* <Checkbox
             checked={row.original.featured}
             onClick={() =>
@@ -156,11 +156,10 @@ export const columns: ColumnDef<IProduct>[] = [
         mutationFn: async (id: string | any) => {
           const res = await instance.delete("/v1/products/" + id);
           return res.data;
-          // console.log(id);
         },
         onSuccess: () => {
           queryClient.invalidateQueries({
-            queryKey: ["Products_Key"],
+            queryKey: [`products`],
           });
           message.open({
             type: "success",
