@@ -3,13 +3,11 @@ import { useOrder } from "@/common/hook/useOrder";
 
 import { useLocalStorage } from "@/common/hook/useStoratge";
 import { IProduct } from "@/common/types/product";
-import instance from "@/configs/axios";
 import useraddresssSchema from "@/untils/userassdress";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Orderlist = () => {
   const [user] = useLocalStorage("user", {});
@@ -27,15 +25,9 @@ const Orderlist = () => {
   const { mutate } = useOrder();
   const onsubmit = async (data: any) => {
     if (data.payment === "bank") {
-      // const response = await instance.post("/v1/payment", {
-      //   amounts: cart?.finalTotalPrice,
-      //   orderid: userId,
-      // });
-      // console.log(response.data);
+
       return (
-        // response.data.payUrl
-        //   ? (window.location.href = response.data.payUrl)
-        //   : toast.error("Thanh toán thất bại"),
+     
         mutate({
           userId,
           customerName: data,
