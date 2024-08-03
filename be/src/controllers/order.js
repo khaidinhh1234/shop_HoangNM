@@ -11,8 +11,7 @@ export const createOrder = async (req, res) => {
       customerName,
       totalPrice,
     });
-
-    await Cart.findOneAndDelete({ userId });
+    await Cart.findByIdAndDelete(userId);
     return res.status(201).json(order);
   } catch (error) {
     res.status(500).json({ message: error.message });

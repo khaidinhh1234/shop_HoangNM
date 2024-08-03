@@ -39,6 +39,7 @@ const Router = () => {
   return (
     <>
       <Routes>
+        {" "}
         <Route path="/" element={<LayoutNhShop />}>
           <Route path="/" element={<LayoutWebsite />}>
             <Route path="/" element={<LayoutHome />}>

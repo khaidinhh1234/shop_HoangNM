@@ -27,19 +27,19 @@ const Bill = () => {
   const { mutate } = useOrder();
   const onsubmit = async (data: any) => {
     if (data.payment === "bank") {
-      const response = await instance.post("/v1/payment", {
-        amounts: cart?.finalTotalPrice,
-        orderid: userId,
-      });
-      console.log(response.data);
+      // const response = await instance.post("/v1/payment", {
+      //   amounts: cart?.finalTotalPrice,
+      //   orderid: userId,
+      // });
+      // console.log(response.data);
       return (
-        response.data.payUrl
-          ? (window.location.href = response.data.payUrl)
-          : toast.error("Thanh toán thất bại"),
+        // response.data.payUrl
+        //   ? (window.location.href = response.data.payUrl)
+        //   : toast.error("Thanh toán thất bại"),
         mutate({
           userId,
           customerName: data,
-          totalPrice: cart?.finalTotalPrice,
+          totalPrice: cart?.finalTotalPrice + 25000,
           items: cart?.products,
         }),
         toast.success("Thanh toán thành công")
@@ -48,9 +48,10 @@ const Bill = () => {
       return mutate({
         userId,
         customerName: data,
-        totalPrice: cart?.finalTotalPrice,
+        totalPrice: cart?.finalTotalPrice + 25000,
         items: cart?.products,
       });
+      nav("/");
     }
   };
 
