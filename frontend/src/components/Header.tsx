@@ -1,16 +1,15 @@
 import { useLocalStorage } from "@/common/hook/useStoratge";
 import { IconSearch, IconWishlist, Iconcart, Logo } from "@/components/Icons";
+import instance from "@/configs/axios";
 
 import { AuthContext, AuthContextType } from "@/contexts/AuthContext";
-
 
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
-
 const Header = () => {
+  const [avatar, setAvatar] = useState<string>("");
   const [users] = useLocalStorage("user", {});
-  const avatar = users?.avatar;
 
   const { user, logout } = useContext(AuthContext) as AuthContextType;
 
@@ -27,6 +26,11 @@ const Header = () => {
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   useEffect(() => {
+    (async () => {
+      const { data } = await instance.get(`/v1/auth/users/${user?._id}`);
+      setAvatar(data.avatar);
+    })();
+
     const handleClickOutside = (e: any) => {
       if (
         !e.target.closest("#user-menu-button") &&
@@ -37,8 +41,7 @@ const Header = () => {
     };
     window.addEventListener("click", handleClickOutside);
     return () => window.removeEventListener("click", handleClickOutside);
-  }, []);
-
+  }, [user?._id]);
 
   return (
     <>
@@ -46,7 +49,6 @@ const Header = () => {
       <header className="header">
         <div className="container">
           <div className="header-inner">
-
             <div className="grid grid-cols-3 items-center">
               <Link to="/home" className="header__logo col-span-1">
                 <img src={Logo} alt="#" />
@@ -149,7 +151,7 @@ const Header = () => {
                               className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg"
                             >
                               <a
-                                href="#"
+                                href={`/usersEdit/${user?._id}`}
                                 className="block px-4 py-2 text-sm font-medium text-gray-700 no-underline"
                               >
                                 Thông tin cá nhân
@@ -167,7 +169,6 @@ const Header = () => {
                       </div>
                     </div>
                   </>
-
                 ) : (
                   <>
                     {" "}
