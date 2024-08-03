@@ -3,14 +3,17 @@ import { IconSearch, IconWishlist, Iconcart, Logo } from "@/components/Icons";
 
 import { AuthContext, AuthContextType } from "@/contexts/AuthContext";
 
+
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+
 
 const Header = () => {
   const [users] = useLocalStorage("user", {});
   const avatar = users?.avatar;
 
   const { user, logout } = useContext(AuthContext) as AuthContextType;
+
   const [isOpen, setIsOpen] = useState(false);
   const nav = useNavigate();
   const [search, setSearch] = useState("");
@@ -35,13 +38,15 @@ const Header = () => {
     window.addEventListener("click", handleClickOutside);
     return () => window.removeEventListener("click", handleClickOutside);
   }, []);
+
+
   return (
     <>
       {" "}
       <header className="header">
         <div className="container">
           <div className="header-inner">
-            {" "}
+
             <div className="grid grid-cols-3 items-center">
               <Link to="/home" className="header__logo col-span-1">
                 <img src={Logo} alt="#" />
@@ -162,6 +167,7 @@ const Header = () => {
                       </div>
                     </div>
                   </>
+
                 ) : (
                   <>
                     {" "}

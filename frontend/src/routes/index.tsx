@@ -34,8 +34,14 @@ import OrdersPage from "@/pages/(dashboard)/admin/order/page";
 import OrderPagehome from "@/pages/(website)/order/order";
 
 import SearchComponent from "@/components/Search";
+<<<<<<< HEAD
+import { AuthContext, AuthContextType } from "@/contexts/AuthContext";
+import { useContext } from "react";
+=======
 
+>>>>>>> 4aee0fd3ce58d22ec522f14e9423cfb7fd69c589
 const Router = () => {
+  const { user } = useContext(AuthContext) as AuthContextType;
   return (
     <>
       <Routes>
@@ -56,23 +62,40 @@ const Router = () => {
               <Route path="/forgotPassword" element={<ForgotPassword />} />
               <Route path="orders" element={<OrderPagehome />}></Route>
               <Route path="thankyou" element={<ThankyouPage />}></Route>{" "}
+              <Route path="usersEdit/:id" element={<UserForm />} />
             </Route>
           </Route>
-          <Route
-            path="admin"
-            element={
-              // <PrivateRoute>
-              <LayoutAdmin />
-              // </PrivateRoute>
-            }
-          >
-            <Route path="/admin/users" element={<Users />} />
-            <Route path="/admin/users/usersEdit/:id" element={<UserForm />} />
-            <Route index element={<DashboardPage />}></Route>
-            <Route path="products" element={<ProductsList />}></Route>
+          {user?.role === "admin" && (
+            <Route
+              path="admin"
+              element={
+                // <PrivateRoute>
+                <LayoutAdmin />
+                // </PrivateRoute>
+              }
+            >
+              <Route path="/admin/users" element={<Users />} />
+              <Route path="/admin/users/usersEdit/:id" element={<UserForm />} />
+              <Route index element={<DashboardPage />}></Route>
+              <Route path="products" element={<ProductsList />}></Route>
 
-            <Route path="products/add" element={<ProductsAdd />}></Route>
+              <Route path="products/add" element={<ProductsAdd />}></Route>
 
+<<<<<<< HEAD
+              <Route
+                path="products/edit/:id"
+                element={<ProductsEdit />}
+              ></Route>
+              <Route path="category" element={<CategoryList />}></Route>
+              <Route path="category/add" element={<CategoryAdd />}></Route>
+              <Route
+                path="category/edit/:id"
+                element={<CategoryEdit />}
+              ></Route>
+              {/* </Route> */}
+            </Route>
+          )}
+=======
             <Route path="products/edit/:id" element={<ProductsEdit />}></Route>
             <Route path="category" element={<CategoryList />}></Route>
             <Route path="category/add" element={<CategoryAdd />}></Route>
@@ -81,6 +104,7 @@ const Router = () => {
 
             {/* </Route> */}
           </Route>
+>>>>>>> 4aee0fd3ce58d22ec522f14e9423cfb7fd69c589
         </Route>
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
