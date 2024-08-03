@@ -9,14 +9,14 @@ export const createProduct = async (req, res) => {
 };
 export const getAllProducts = async (req, res) => {
   try {
-    const product = await Products.find().populate({
+    const products = await Products.find().populate({
       path: "category",
       select: "name",
     });
-    if (product.length === 0) {
-      return res.status(404).json({ message: "không có sản  phẩm" });
+    if (products.length === 0) {
+      return res.status(200).json([]);
     }
-    res.status(200).json(product);
+    res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

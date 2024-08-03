@@ -2,9 +2,7 @@ import LayoutWebsite from "@/pages/(auth)/layout";
 import Signin from "@/pages/(auth)/signin";
 import Signup from "@/pages/(auth)/signup";
 import LayoutNhShop from "@/pages/(dashboard)/Layout";
-
 import CategoryDetail from "@/pages/(dashboard)/user/home/_component/categoryDetail";
-
 import LayoutHome from "@/pages/(dashboard)/user/home/layout";
 import PageHome from "@/pages/(dashboard)/user/home/page";
 import NotFound from "@/pages/(website)/404/page";
@@ -34,6 +32,8 @@ import OrdersPage from "@/pages/(dashboard)/admin/order/page";
 import OrderPagehome from "@/pages/(website)/order/order";
 
 import SearchComponent from "@/components/Search";
+import BillPage from "@/pages/(website)/Bill/Bill";
+// import { ToastContainer } from "react-toastify";
 
 const Router = () => {
   return (
@@ -55,6 +55,7 @@ const Router = () => {
               <Route path="signup" element={<Signup />}></Route>
               <Route path="/forgotPassword" element={<ForgotPassword />} />
               <Route path="orders" element={<OrderPagehome />}></Route>
+              <Route path="bill/:id" element={<BillPage />}></Route>
               <Route path="thankyou" element={<ThankyouPage />}></Route>{" "}
             </Route>
           </Route>
@@ -83,6 +84,7 @@ const Router = () => {
           </Route>
         </Route>
         <Route path="*" element={<NotFound />}></Route>
+        {/* <ToastContainer /> */}
       </Routes>
     </>
   );

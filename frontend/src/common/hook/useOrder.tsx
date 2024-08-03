@@ -34,10 +34,8 @@ export const useOrder = () => {
       //   orderId: response.data.orderId,
       // });
       // console.log(check);
-      const api = await instance.post("/v1/check-status-transaction", {
-        orderId: response.data.orderId,
-      });
-      console.log(api);
+
+      // console.log(api);
       // toast.success("Vui lòng kiểm tra email để xác nhận đơn hàng");
     },
   });

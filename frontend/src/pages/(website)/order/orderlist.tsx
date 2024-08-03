@@ -11,7 +11,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Bill = () => {
+const Orderlist = () => {
   const [user] = useLocalStorage("user", {});
 
   const userId = user?._id;
@@ -41,8 +41,7 @@ const Bill = () => {
           customerName: data,
           totalPrice: cart?.finalTotalPrice + 25000,
           items: cart?.products,
-        }),
-        toast.success("Thanh toán thành công")
+        })
       );
     } else {
       return mutate({
@@ -324,4 +323,4 @@ const Bill = () => {
   );
 };
 
-export default Bill;
+export default Orderlist;

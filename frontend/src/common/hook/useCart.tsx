@@ -39,7 +39,7 @@ export const useCartMutate = () => {
 
       const productId = data?.product?._id || data?.product?.productId;
       // || data.product.productId;
-      console.log(data);
+      // console.log(data);
       if (action == "delete-product") {
         const res = await instance.delete(`/v1/carts/delete-product`, {
           data: { userId, productId },
@@ -56,12 +56,12 @@ export const useCartMutate = () => {
                 userId,
               }
         );
-        if (action == "add-to-cart") {
-          message.open({
-            type: "success",
-            content: `Bạn đã Thêm ${quantity} sản phẩm vào cart`,
-          });
-        }
+        // if (action == "add-to-cart") {
+        //   // message.open({
+        //   //   type: "success",
+        //   //   content: `Bạn đã Thêm ${quantity} sản phẩm vào cart`,
+        //   // });
+        // }
         return res.data, quantity;
       }
     },

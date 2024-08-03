@@ -168,7 +168,7 @@ const ProductsAdd = () => {
               <div className="grid grid-cols-2 gap-5">
                 <Form.Item
                   label="Giá gốc sản phẩm"
-                  name="regular_price"
+                  name="discount"
                   rules={[
                     {
                       required: true,
@@ -179,17 +179,17 @@ const ProductsAdd = () => {
                 >
                   <InputNumber
                     placeholder="Nhập giá gốc sản phẩm"
-                    className="w-[490px]"
+                    className="w-[475px]"
                     min={0}
                   />
                 </Form.Item>{" "}
                 <Form.Item
-                  label="giá khuyến mãi"
-                  name="discount"
+                  label="Giá khuyến mãi"
+                  name="regular_price"
                   rules={[
                     ({ getFieldValue }) => ({
                       validator(_, value) {
-                        if (!value || value < getFieldValue("regular_price")) {
+                        if (!value || value < getFieldValue("discount")) {
                           return Promise.resolve();
                         }
                         return Promise.reject(
@@ -200,10 +200,10 @@ const ProductsAdd = () => {
                   ]}
                 >
                   <InputNumber
-                    placeholder="Nhập giá khuyến mãi sản phẩm"
+                    placeholder="Nhập giá gốc sản phẩm"
                     className="w-[490px]"
                   />
-                </Form.Item>
+                </Form.Item>{" "}
               </div>
               <div className="grid grid-cols-2 gap-5">
                 <Form.Item

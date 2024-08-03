@@ -1,5 +1,5 @@
 import { useLocalStorage } from "@/common/hook/useStoratge";
-import { IconSearch, IconWishlist, Iconcart, Logo } from "@/components/Icons";
+import { IconWishlist, Iconcart, Logo } from "@/components/Icons";
 
 import { AuthContext, AuthContextType } from "@/contexts/AuthContext";
 
@@ -16,8 +16,9 @@ const Header = () => {
   const [search, setSearch] = useState("");
   const handleKeyDown = (e: any) => {
     if (search) {
+      // console.log(search);
       e.preventDefault();
-      nav(`/search?query=${search}`);
+      nav(`/search?rau=${search}`);
     }
   };
 
