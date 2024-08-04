@@ -63,22 +63,25 @@ const Header = () => {
               <nav className="main-menu col-span-1">
                 <ul className="main-menu__list">
                   <li className="main-menu__item">
-                    <NavLink to="/" className="main-menu_link ">
+                    <NavLink to="/" className="main-menu_link  rounded-lg">
                       Home
                     </NavLink>
                   </li>
                   <li className="main-menu__item">
-                    <NavLink to="/shop" className="main-menu_link">
+                    <NavLink to="/shop" className="main-menu_link rounded-lg">
                       Shop
                     </NavLink>
                   </li>
                   <li className="main-menu__item">
-                    <NavLink to="/about" className="main-menu_link">
+                    <NavLink to="/about" className="main-menu_link rounded-lg">
                       About
                     </NavLink>
                   </li>
                   <li className="main-menu__item">
-                    <NavLink to="/contact" className="main-menu_link">
+                    <NavLink
+                      to="/contact"
+                      className="main-menu_link rounded-lg "
+                    >
                       Contact
                     </NavLink>
                   </li>
@@ -151,19 +154,22 @@ const Header = () => {
                               id="dropdown-menu"
                               className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg"
                             >
+                              {" "}
+                              <p className="block px-4 py-2 font-bold   text-gray-700 no-underline bg-slate-400">
+                                {user?.name}
+                              </p>
                               <a
                                 href={`/usersEdit/${user?._id}`}
-                                className="block px-4 py-2 text-sm font-medium text-gray-700 no-underline"
+                                className="block px-4 py-2 text-sm font-medium text-gray-700 no-underline "
                               >
                                 Thông tin cá nhân
                               </a>
-
-                              <a
-                                className="block px-4 py-2 text-sm font-medium text-gray-700 no-underline"
+                              <p
+                                className="block px-4 py-2 text-sm font-medium text-gray-700 no-underline cursor-pointer "
                                 onClick={logout}
                               >
                                 Đăng xuất
-                              </a>
+                              </p>
                             </div>
                           )}
                         </div>

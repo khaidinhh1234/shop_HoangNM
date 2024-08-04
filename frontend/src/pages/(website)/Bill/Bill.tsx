@@ -36,7 +36,7 @@ const BillPage = () => {
 
         return result.data;
       } catch (error) {
-        toast.error("Đã có lỗi xảy ra");
+        toast.success("Đã có lỗi xảy ra");
       }
     },
   });
@@ -49,19 +49,24 @@ const BillPage = () => {
       //   console.log(res.data);
       if (res.data.resultCode === 0) {
         mutate({ id });
-        // toast.success("Thanh toán thành công");
+        toast.success("Thanh toán thành công");
       } else {
         toast.error(res.data.resultCode);
       }
     } catch (error) {
-      toast.error("Thanh toán thất bại");
+      toast.error("Thanh toán khi");
     }
   };
 
   useEffect(() => {
     checktrangthai();
   }, [orderid, bill]); // Thay đổi theo `orderid` và `bill`
-
+  // if (bill.customerName.payment === "bank") {
+  //     } else if (bill.customerName.payment === "palpay") {
+  //       toast.success("Vui lòng thanh toán khi nhận hàng");
+  //     } else {
+  //       toast.error("Đặt hàng thất bại");
+  //     }
   //   console.log(bill);
   //   console.log(id);
   const thoigianmua = bill?.createdAt; // Thời gian UTC

@@ -25,16 +25,12 @@ const Orderlist = () => {
   const { mutate } = useOrder();
   const onsubmit = async (data: any) => {
     if (data.payment === "bank") {
-
-      return (
-     
-        mutate({
-          userId,
-          customerName: data,
-          totalPrice: cart?.finalTotalPrice + 25000,
-          items: cart?.products,
-        })
-      );
+      return mutate({
+        userId,
+        customerName: data,
+        totalPrice: cart?.finalTotalPrice + 25000,
+        items: cart?.products,
+      });
     } else {
       return mutate({
         userId,
@@ -173,7 +169,7 @@ const Orderlist = () => {
                         <div className="grid grid-cols-4 p-2 border-2 ">
                           <div className="p-2 col-span-1">
                             <img
-                              // src={product.feature_image}
+                              src={Array.isArray(product.feature_image) ? product.feature_image[0] : product.feature_image ?? ""}
                               alt=""
                               className="w-full h-24 p-1"
                             />

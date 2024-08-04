@@ -45,24 +45,14 @@ const DetailPage = () => {
                 <Link to="/" className="review-home__link">
                   Home
                 </Link>
-                <img
-                  src="./public/images/detail/icondau.svg"
-                  alt="#"
-                  className="review-img"
-                />
               </div>
-              <div className="review-home">
+              <div className="review-home border-l border-black pl-5 ml-3">
                 <Link to="/shop" className="review-home__link">
                   Shop
                 </Link>
-                <img
-                  src="./public/images/detail/icondau.svg"
-                  alt="#"
-                  className="review-img"
-                />
               </div>
-              <div className="review-home">
-                <span className="review-home-sofa">{product.name}</span>
+              <div className="review-home border-l border-black  ml-3">
+                <span className="">{product.name}</span>
               </div>
             </div>
           </div>
@@ -72,40 +62,40 @@ const DetailPage = () => {
             <div className="product-list">
               <div className="product-images">
                 <div className="product-images__smail">
-                  <div className="product-images__smailone">
+                  <div className="product-images__smailone border w-20 h-20 rounded-lg">
                     <img
-                      src="https://picsum.photos/id/453/76/80"
+                      src={product.feature_image}
                       alt="#"
-                      className="product-images-size"
+                      className="product-images-size w-full h-full"
                     />
                   </div>
-                  <div className="product-images__smailone">
+                  <div className="product-images__smailone border w-20 h-20 rounded-lg">
                     <img
-                      src="https://picsum.photos/id/453/76/80"
+                      src={product.feature_image}
                       alt="#"
-                      className="product-images-size"
+                      className="product-images-size w-full h-full"
                     />
                   </div>
-                  <div className="product-images__smailone">
+                  <div className="product-images__smailone border w-20 h-20 rounded-lg">
                     <img
-                      src="https://picsum.photos/id/908/76/80"
+                      src={product.feature_image}
                       alt="#"
-                      className="product-images-size"
+                      className="product-images-size w-full h-full"
                     />
                   </div>
-                  <div className="product-images__smailone">
+                  <div className="product-images__smailone border w-20 h-20 rounded-lg">
                     <img
-                      src="https://picsum.photos/id/392/76/80"
+                      src={product.feature_image}
                       alt="#"
-                      className="product-images-size"
+                      className="product-images-size w-full h-full"
                     />
                   </div>
                 </div>
-                <div className="product-images__big">
+                <div className="product-images__big ">
                   <img
                     src={product.feature_image}
                     alt="#"
-                    className="product-images-size w-[423px] h-[550px]"
+                    className="product-images-size w-[490px] h-[550px]"
                   />
                 </div>
               </div>
@@ -157,7 +147,7 @@ const DetailPage = () => {
                   </div>
                 </div>
                 {/* End productsize*/}
-                <div className="product-color">
+                {/* <div className="product-color">
                   <div className="product-color__name">
                     <span className="product-color__color">Color</span>
                   </div>
@@ -175,9 +165,9 @@ const DetailPage = () => {
                       <span className="bg-yellow-500 px-[14px] py-1 rounded-full" />
                     </a>
                   </div>
-                </div>
+                </div> */}
                 {/* End productcolor*/}
-                <div className="product-btn">
+                <div className="product-btn mt-20">
                   <div className=" py-2 px-10 flex items-center border border-slate-900 rounded-xl  mr-2">
                     <button
                       className=" mr-5"
@@ -227,13 +217,13 @@ const DetailPage = () => {
                       <p className="product-btn-link pt-1">Add to Cart</p>
                     </button>
                   </div>
-                  <div className="product-btn-conmpare">
+                  {/* <div className="product-btn-conmpare">
                     <button className="product-btn-button">
                       <a href="#" className="product-btn-link">
                         +Compare
                       </a>
                     </button>
-                  </div>
+                  </div> */}
                 </div>{" "}
                 {/* End productbtn*/}
                 <hr className="product-hr" />

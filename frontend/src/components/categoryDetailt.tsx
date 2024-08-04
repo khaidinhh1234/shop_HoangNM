@@ -67,7 +67,13 @@ const CategoryDetail = () => {
                           alt="#"
                           className="products__thumbnail"
                         />
-                        <span className="products-sale bg-green-600">New</span>
+                        <span
+                          className={`products-sale  ${
+                            product.featured ? "bg-green-600" : "bg-red-400"
+                          }`}
+                        >
+                          {product.featured ? "New" : "Sale"}
+                        </span>
                       </div>
                       <div className="products-info">
                         <h3 className="products__name h-14">

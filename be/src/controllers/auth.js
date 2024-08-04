@@ -170,9 +170,11 @@ export const getUser = async (req, res) => {
 export const getAllUsers = async (req, res) => {
   try {
     const user = await User.find();
+
     if (user.length === 0) {
       return res.status(404).json({ message: "không có user" });
     }
+
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });

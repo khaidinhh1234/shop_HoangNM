@@ -50,9 +50,12 @@ const UserForm = () => {
     }
   };
   return (
-    <div>
+    <div className="mt-10 mx-20">
       <h1>Edit user</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className=" bg-white py-5 px-8 shadow-2xl shadow-black mt-4 mb-10 rounded-xl"
+      >
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Name
@@ -107,7 +110,7 @@ const UserForm = () => {
         </div>
 
         <div className="mb-3">
-          <button className="btn btn-primary w-100">Edit</button>
+          <button className="btn btn-primary w-40">Cập nhập</button>
         </div>
       </form>
     </div>

@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { message } from "antd";
+import { Checkbox, message } from "antd";
 import { Link } from "react-router-dom";
 
 import instance from "@/configs/axios";
@@ -126,23 +126,33 @@ export const columns: ColumnDef<IProduct>[] = [
     accessorKey: "featured",
     header: "featured",
     cell: ({ row }) => {
-      // const { mutate } = useMutate({
-      //   action: "products",
-      //   id: row.original._id,
-      // });
+      const queryClient = useQueryClient();
+      const { mutate } = useMutation({
+        mutationFn: async (data: any) => {
+          const res = await instance.put(`/v1/products/${data._id}`, data);
+          return res.data;
+        },
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: [`products`],
+          });
+          message.open({
+            type: "success",
+            content: "Cập nhật sản phẩm nổi bật thành công",
+          });
+        },
+      });
       return (
-        <div>{row.original.featured ? "có" : "không"}</div>
-        /* <Checkbox
-            checked={row.original.featured}
-            onClick={() =>
-              mutate({
-                ...row.original,
-                featured: !row.original.featured,
-              } as any)
-            }
-          >
-            Checkbox
-          </Checkbox> */
+        // <div>{row.original.featured ? "có" : "không"}</div>
+        <Checkbox
+          checked={row.original.featured}
+          onClick={() =>
+            mutate({
+              ...row.original,
+              featured: !row.original.featured,
+            } as any)
+          }
+        ></Checkbox>
       );
     },
   },
@@ -208,7 +218,7 @@ export const columns: ColumnDef<IProduct>[] = [
             </AlertDialog>
 
             <DropdownMenuItem>
-              <Link to={`edit/${id}`}>Update</Link>
+              <Link to={`/admin/products/edit/${id}`}>Update</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

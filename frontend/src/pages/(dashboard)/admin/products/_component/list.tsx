@@ -8,7 +8,7 @@ const List = () => {
   const { data, isLoading, isError, error } = useUserQuery({
     action: "products",
   });
-  console.log(data);
+  // console.log(data);
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -18,7 +18,7 @@ const List = () => {
 
   return (
     <div>
-      <Breadcrumb style={{ margin: "16px 30px" }}>
+      <Breadcrumb style={{ margin: "0px 30px" }}>
         <Breadcrumb.Item>Admin</Breadcrumb.Item>
         <Breadcrumb.Item>ProductsPage</Breadcrumb.Item>
       </Breadcrumb>

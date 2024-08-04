@@ -92,7 +92,7 @@ const List = () => {
   return (
     <div>
       <div>
-        <Breadcrumb style={{ margin: "16px 30px" }}>
+        <Breadcrumb style={{ margin: "0px 30px" }}>
           <Breadcrumb.Item>Admin</Breadcrumb.Item>
           <Breadcrumb.Item>CategoryPage</Breadcrumb.Item>
         </Breadcrumb>
