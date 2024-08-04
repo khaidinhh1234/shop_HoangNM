@@ -44,7 +44,15 @@ export const useCartMutate = () => {
         const res = await instance.delete(`/v1/carts/delete-product`, {
           data: { userId, productId },
         });
-        toast.success(`Bạn đã sản phẩm khỏi cart`);
+        toast.success(`Bạn gỡ sản phẩm khỏi cart`);
+        return res.data;
+      } else if (action === "descrease" || action === "inscrease") {
+        const res = await instance.post(`/v1/carts/${action}`, {
+          productId,
+          userId,
+          quantity,
+        });
+
         return res.data;
       } else {
         const res = await instance.post(
@@ -62,17 +70,16 @@ export const useCartMutate = () => {
         //   //   content: `Bạn đã Thêm ${quantity} sản phẩm vào cart`,
         //   // });
         // }
+        !quantity
+          ? ""
+          : quantity < 10
+          ? toast.success(`Bạn đã Thêm  ${quantity} sản phẩm vào cart`)
+          : toast.error(`Bạn chỉ được nhập tối đa 10 sản phẩm vào cart `);
         return res.data, quantity;
       }
     },
 
-    onSuccess: (quantity) => {
-      !quantity
-        ? ""
-        : quantity < 10
-        ? toast.success(`Bạn đã Thêm  ${quantity} sản phẩm vào cart`)
-        : toast.error(`Bạn chỉ được nhập tối đa 10 sản phẩm vào cart `);
-
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["ProductsCart_key"],
       });

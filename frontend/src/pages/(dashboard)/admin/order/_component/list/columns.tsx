@@ -10,12 +10,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog.tsx";
-import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { IProduct } from "@/common/types/product";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,7 +27,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { message } from "antd";
 import { Link } from "react-router-dom";
-import useMutate from "@/common/hook/useMutate";
+
 import instance from "@/configs/axios";
 
 export const columns: ColumnDef<IProduct>[] = [
@@ -38,31 +38,21 @@ export const columns: ColumnDef<IProduct>[] = [
   },
 
   {
-    accessorKey: "avatar",
-    header: "Avatar",
-    cell: ({ row }: any) => (
-      <img
-        src={row.original.userId.avatar}
-        alt=""
-        className="w-20 h-20 p-2 bg-gray-100 rounded-xl"
-      />
-    ),
-  },
-  {
-    accessorKey: "email",
-    header: "Tài khoản ",
+    accessorKey: "name",
+    header: "Tên khách hàng",
     cell: ({ row }: any) => (
       <div className=" font-semibold truncate w-40">
-        {row.original?.userId?.email}
+        {row.original?.customerName?.name}
       </div>
     ),
   },
   {
-    accessorKey: "name",
-    header: "Tên người nhận hàng",
+    accessorKey: "createdAt",
+    header: "Thời gian order",
     cell: ({ row }: any) => (
-      <div className=" font-semibold truncate w-40">
-        {row.original?.customerName?.name}
+      <div className=" font-semibold ">
+        {(row?.original?.createdAt).slice(0, 10)} -{" "}
+        {(row?.original?.createdAt).split("T")[1].slice(0, 8)}
       </div>
     ),
   },
@@ -121,6 +111,17 @@ export const columns: ColumnDef<IProduct>[] = [
       )),
   },
   {
+    accessorKey: "email",
+    header: "Thanh toán ",
+    cell: ({ row }: any) => (
+      <div className=" font-semibold truncate w-40">
+        {row.original?.customerName?.payment == "bank"
+          ? "Chuyển khoản"
+          : "Thanh toán khi nhận hàng"}
+      </div>
+    ),
+  },
+  {
     accessorKey: "status",
     header: ({ column }) => {
       return <div> Trạng thái DH</div>;
@@ -155,7 +156,7 @@ export const columns: ColumnDef<IProduct>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
+    cell: ({ row }: any) => {
       const id = row.original._id;
       const queryClient = useQueryClient();
       const { mutate } = useMutation({
@@ -185,41 +186,77 @@ export const columns: ColumnDef<IProduct>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Quản trị</DropdownMenuLabel>
-
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <div className="relative flex cursor-default select-none items-center  hover:text-white hover:bg-red-500 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors  data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                  Huỷ
-                </div>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    Bạn có chắc chắn nuốn hủy không{" "}
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Hành động này không thể hoàn tác.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel className="hover:bg-white bg-black hover:text-black text-white rounded-md shadow-sm shadow-black">
-                    Hủy
-                  </AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={() => mutate(id!)}
-                    className="hover:bg-white bg-red-500 hover:text-black text-white rounded-md shadow-sm shadow-black"
+            {row?.original?.customerName?.payment == "bank" &&
+            row.original?.status == "pending" ? (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <div className="relative flex cursor-default select-none items-center  hover:text-white hover:bg-red-500 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors  data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                    Huỷ
+                  </div>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Bạn có chắc chắn nuốn hủy không{" "}
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Hành động này không thể hoàn tác.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="hover:bg-white bg-black hover:text-black text-white rounded-md shadow-sm shadow-black">
+                      Hủy
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => mutate(id!)}
+                      className="hover:bg-white bg-red-500 hover:text-black text-white rounded-md shadow-sm shadow-black"
+                    >
+                      Xác nhận
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            ) : (
+              <div>
+                {" "}
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <div className="relative flex cursor-default select-none items-center  hover:text-white hover:bg-red-500 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors  data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                      Huỷ
+                    </div>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Bạn có chắc chắn nuốn hủy không{" "}
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Hành động này không thể hoàn tác.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="hover:bg-white bg-black hover:text-black text-white rounded-md shadow-sm shadow-black">
+                        Hủy
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => mutate(id!)}
+                        className="hover:bg-white bg-red-500 hover:text-black text-white rounded-md shadow-sm shadow-black"
+                      >
+                        Xác nhận
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                <DropdownMenuItem className="">
+                  <Link
+                    to={`edit/${id}`}
+                    className="no-underline hover:text-white"
                   >
-                    Xác nhận
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-
-            <DropdownMenuItem className="">
-              <Link to={`edit/${id}`} className="no-underline hover:text-white">
-                Xác Nhận
-              </Link>
-            </DropdownMenuItem>
+                    Xác Nhận
+                  </Link>
+                </DropdownMenuItem>
+              </div>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
       );

@@ -4,10 +4,9 @@ import { ICategory } from "@/common/types/category";
 import { IProduct } from "@/common/types/product";
 
 import { Loading3QuartersOutlined, PlusOutlined } from "@ant-design/icons";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Breadcrumb,
-  Button,
   Checkbox,
   Form,
   FormProps,
@@ -28,14 +27,31 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const ProductsEdit = () => {
-  const nav = useNavigate();
   const { id } = useParams();
+  const nav = useNavigate();
   const [form] = Form.useForm();
-  const { data: category, isLoading } = useUserQuery({ action: "category" });
-  const { data: pro } = useUserQuery({
-    action: `products/${id}`,
-    id,
+  const queryClient = useQueryClient();
+  const {
+    data: category,
+    isError,
+    isLoading,
+  } = useUserQuery({ action: "category" });
+
+  const {
+    data: pro,
+    isLoading: isloading,
+    isError: iserror,
+    error,
+  } = useQuery({
+    queryKey: [`products`, id],
+    queryFn: async () => {
+      const res = await axios.get(
+        `http://localhost:8080/api/v1/products/${id}`
+      );
+      return res.data;
+    },
   });
+
   const { mutate, isPending } = useMutation({
     mutationFn: async (data) => {
       try {
@@ -51,6 +67,9 @@ const ProductsEdit = () => {
       // console.log(data);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [`products`],
+      });
       message.open({
         type: "success",
         content: "Cập nhật sản phẩm thành công",
@@ -70,7 +89,7 @@ const ProductsEdit = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  // console.log(fileList);
+
   const getBase64 = (file: any): Promise<string> =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -112,6 +131,16 @@ const ProductsEdit = () => {
   );
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error</div>;
+  }
+  if (isloading) {
+    return <div>Loading...</div>;
+  }
+  if (iserror) {
+    return <div>Error: {error?.message}</div>;
   }
   return (
     <div>
@@ -182,7 +211,7 @@ const ProductsEdit = () => {
               <div className="grid grid-cols-2 gap-5">
                 <Form.Item
                   label="Giá gốc sản phẩm"
-                  name="regular_price"
+                  name="discount"
                   rules={[
                     {
                       required: true,
@@ -193,17 +222,17 @@ const ProductsEdit = () => {
                 >
                   <InputNumber
                     placeholder="Nhập giá gốc sản phẩm"
-                    className="w-[490px]"
+                    className="w-[475px]"
                     min={0}
                   />
                 </Form.Item>{" "}
                 <Form.Item
-                  label="giá khuyến mãi"
-                  name="discount"
+                  label="Giá khuyến mãi"
+                  name="regular_price"
                   rules={[
                     ({ getFieldValue }) => ({
                       validator(_, value) {
-                        if (!value || value < getFieldValue("regular_price")) {
+                        if (!value || value < getFieldValue("discount")) {
                           return Promise.resolve();
                         }
                         return Promise.reject(
@@ -214,10 +243,10 @@ const ProductsEdit = () => {
                   ]}
                 >
                   <InputNumber
-                    placeholder="Nhập giá khuyến mãi sản phẩm"
+                    placeholder="Nhập giá gốc sản phẩm"
                     className="w-[490px]"
                   />
-                </Form.Item>
+                </Form.Item>{" "}
               </div>
               <div className="grid grid-cols-2 gap-5">
                 <Form.Item

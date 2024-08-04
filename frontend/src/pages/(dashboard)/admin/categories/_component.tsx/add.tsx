@@ -5,15 +5,17 @@ import instance from "@/configs/axios";
 import { BackwardFilled } from "@ant-design/icons";
 import { useMutation } from "@tanstack/react-query";
 import { Form, FormProps, Input, message } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CategoryAdd = () => {
+  const nav = useNavigate();
   const [form] = Form.useForm();
   const { mutate, isPending } = useMutation({
     mutationFn: async (formdata: ICategory) => {
       try {
         const response = await instance.post(`/v1/category`, formdata);
-        console.log(response.data);
+        // console.log(response.data);
+        nav("/admin/category");
         return response.data;
       } catch (error: any) {
         throw new Error(error.response.data.message);

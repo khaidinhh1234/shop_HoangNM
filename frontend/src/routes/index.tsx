@@ -11,13 +11,10 @@ import AboutPage from "@/pages/(website)/about/about";
 import CartPage from "@/pages/(website)/cart/page";
 import ContectPage from "@/pages/(website)/contect/contect";
 import { Route, Routes } from "react-router-dom";
-
 import ThankyouPage from "@/pages/(dashboard)/user/home/_component/thankyou";
-
 import ForgotPassword from "@/pages/(auth)/forgotPassword";
 import Users from "@/pages/(dashboard)/admin/users/Users";
 import UserForm from "@/pages/(dashboard)/admin/users/UserForm";
-
 import DashboardPage from "@/pages/(dashboard)/admin/dashboard/page";
 import ProductsAdd from "@/pages/(dashboard)/admin/products/_component/add";
 import ProductsEdit from "@/pages/(dashboard)/admin/products/_component/edit";
@@ -27,16 +24,13 @@ import CategoryAdd from "@/pages/(dashboard)/admin/categories/_component.tsx/add
 import CategoryEdit from "@/pages/(dashboard)/admin/categories/_component.tsx/edit";
 import LayoutAdmin from "@/pages/(dashboard)/admin/Layoutadmin";
 import DetailPage from "@/pages/(website)/detail/detail";
-
 import OrdersPage from "@/pages/(dashboard)/admin/order/page";
 import OrderPagehome from "@/pages/(website)/order/order";
-
 import SearchComponent from "@/components/Search";
 import BillPage from "@/pages/(website)/Bill/Bill";
-// import { ToastContainer } from "react-toastify";
-
 import { AuthContext, AuthContextType } from "@/contexts/AuthContext";
 import { useContext } from "react";
+import UserPage from "@/pages/(website)/user/page";
 
 const Router = () => {
   const { user } = useContext(AuthContext) as AuthContextType;
@@ -61,6 +55,7 @@ const Router = () => {
               <Route path="orders" element={<OrderPagehome />}></Route>
               <Route path="bill/:id" element={<BillPage />}></Route>
               <Route path="thankyou" element={<ThankyouPage />}></Route>{" "}
+              <Route path="users/:id" element={<UserPage />}></Route>
               <Route path="usersEdit/:id" element={<UserForm />} />
             </Route>
           </Route>
@@ -70,9 +65,7 @@ const Router = () => {
               <Route path="/admin/users/usersEdit/:id" element={<UserForm />} />
               <Route index element={<DashboardPage />}></Route>
               <Route path="products" element={<ProductsList />}></Route>
-
               <Route path="products/add" element={<ProductsAdd />}></Route>
-
               <Route
                 path="products/edit/:id"
                 element={<ProductsEdit />}

@@ -1,8 +1,11 @@
 import {
+  AppstoreOutlined,
   DesktopOutlined,
   FileOutlined,
   PieChartOutlined,
+  ShopOutlined,
   TeamOutlined,
+  UserSwitchOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
@@ -39,7 +42,7 @@ const items: MenuItem[] = [
     "Products",
     "2",
     <Link to={"/admin/products"}>
-      <DesktopOutlined />
+      <ShopOutlined />
     </Link>
   ),
   getItem(
@@ -47,7 +50,7 @@ const items: MenuItem[] = [
     "3",
     <Link to={"/admin/category"}>
       {" "}
-      <DesktopOutlined />
+      <AppstoreOutlined />
     </Link>
   ),
   getItem(
@@ -55,10 +58,23 @@ const items: MenuItem[] = [
     "4",
     <Link to={"/admin/orders"}>
       {" "}
-      <DesktopOutlined />
+      <FileOutlined />
     </Link>
   ),
-  getItem("Files", "9", <FileOutlined />),
+  getItem(
+    "Ship",
+    "5",
+    <Link to={"/admin/ship"}>
+      <UserSwitchOutlined />
+    </Link>
+  ),
+  getItem(
+    "User",
+    "6",
+    <Link to={"/admin/users"}>
+      <UserSwitchOutlined />
+    </Link>
+  ),
 ];
 
 const LayoutAdmin = () => {

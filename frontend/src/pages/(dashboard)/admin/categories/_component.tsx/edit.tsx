@@ -3,8 +3,8 @@ import instance from "@/configs/axios";
 
 import { BackwardFilled } from "@ant-design/icons";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import {  Form, FormProps, Input, message } from "antd";
-import { Link, useParams } from "react-router-dom";
+import { Form, FormProps, Input, message } from "antd";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 type FieldType = {
   name: string;
@@ -12,7 +12,7 @@ type FieldType = {
 
 const CategoryEdit = () => {
   const { id } = useParams();
-
+  const nav = useNavigate();
   const {
     data: category,
     isError,
@@ -25,12 +25,13 @@ const CategoryEdit = () => {
       return res.data;
     },
   });
-  console.log(category?.category);
+  // console.log(category?.category);
   const { mutate, isPending } = useMutation({
     mutationFn: async (formdata: FieldType) => {
       try {
         const response = await instance.put(`/v1/category/${id}`, formdata);
-        console.log(response.data);
+        // console.log(response.data);
+        nav("/admin/category");
         return response.data;
       } catch (error: any) {
         throw new Error(error.response.data.message);

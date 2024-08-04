@@ -1,6 +1,7 @@
 import { ship } from "@/assets/img";
 import { useCart, useCartMutate } from "@/common/hook/useCart";
 import { useLocalStorage } from "@/common/hook/useStoratge";
+import { IProduct } from "@/common/types/product";
 import { toast } from "react-toastify";
 
 const Cart = () => {
@@ -158,14 +159,22 @@ const Cart = () => {
                 </div>
               </div>
               <div className="cart-totals">
-                <button className="cart-totals_btn">
+                <button className="">
                   <a
                     href="/orders"
-                    className={`cart-totals_link border hover:border-[#b88e2f] hover:bg-[#b88e2f]/90 border-black hover:text-white px-10 py-3 rounded-2xl ${
-                      cart.products.length === 0 ? "cursor-not-allowed" : ""
+                    className={`cart-totals_link  text-white     hover:text-white px-10 py-3 rounded-2xl ${
+                      cart.products.length === 0
+                        ? "cursor-not-allowed bg-[#b88e2f]"
+                        : cart.products.some((item: any) => item.quantity > 10)
+                        ? "cursor-not-allowed px-3 bg-[#b88e2f]"
+                        : "hover:bg-[#b88e2f]  bg-[#b88e2f]/50"
                     }`}
                   >
-                    Check Out
+                    {cart.products.length === 0
+                      ? "Giỏ hàng trống"
+                      : cart.products.some((item: any) => item.quantity > 10)
+                      ? "Chỉ được mua số lượng 10 của mỗi sản phẩm"
+                      : "Mua Hàng"}
                   </a>
                 </button>
               </div>

@@ -6,13 +6,14 @@ const useMutate = ({ action, id }: { action: string; id: string | any }) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data) => {
+      console.log(data);
       if (!id) {
         const res = await instance.post(`/${action}`);
         console.log(res.data);
         return res.data;
       } else {
         const res = await instance.put(`/${action}/${id}`, data);
-
+        console.log(res.data);
         return res.data;
       }
     },
